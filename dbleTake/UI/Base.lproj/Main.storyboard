@@ -1,24 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Capture View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CaptureViewController" customModule="dbleTake" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vc2-st-OZ4" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
+                                <rect key="frame" x="20" y="465" width="374" height="397"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rDX-wl-wyG" customClass="ShutterButton" customModule="dbleTake" customModuleProvider="target">
+                                        <rect key="frame" x="157" y="311" width="60" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="8IR-tb-kOf"/>
+                                            <constraint firstAttribute="width" constant="60" id="cKe-4P-wbF"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="shutterTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="INX-SW-YGL"/>
+                                        </connections>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="rDX-wl-wyG" secondAttribute="bottom" constant="26" id="fsB-C7-VAM"/>
+                                    <constraint firstItem="rDX-wl-wyG" firstAttribute="centerX" secondItem="Vc2-st-OZ4" secondAttribute="centerX" id="pIH-oz-Up9"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PjH-UV-n43" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
+                                <rect key="frame" x="20" y="44" width="374" height="420"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PjH-UV-n43" secondAttribute="trailing" constant="20" id="7sK-Rw-Nle"/>
+                            <constraint firstItem="Vc2-st-OZ4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="JZI-hd-Nm3"/>
+                            <constraint firstItem="PjH-UV-n43" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="MwF-cC-8Qu"/>
+                            <constraint firstItem="Vc2-st-OZ4" firstAttribute="top" secondItem="PjH-UV-n43" secondAttribute="bottom" constant="1" id="S6E-G0-XDH"/>
+                            <constraint firstItem="Vc2-st-OZ4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="465" id="Tiq-rP-voQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Vc2-st-OZ4" secondAttribute="trailing" constant="20" id="WsO-Gj-V2d"/>
+                            <constraint firstItem="Vc2-st-OZ4" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Yfw-85-i1o"/>
+                            <constraint firstItem="Vc2-st-OZ4" firstAttribute="top" secondItem="PjH-UV-n43" secondAttribute="bottom" constant="1" id="cw5-Yw-Qj7"/>
+                            <constraint firstItem="PjH-UV-n43" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="hdO-nR-cyc"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="backCameraPreview" destination="PjH-UV-n43" id="r6Y-hh-Vzp"/>
+                        <outlet property="frontCameraPreview" destination="Vc2-st-OZ4" id="ux5-cp-5Bd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
         </scene>
     </scenes>
 </document>

@@ -1,0 +1,6 @@
+framework module Pods_dbleTake {
+  umbrella header "Pods-dbleTake-umbrella.h"
+
+  export *
+  module * { export * }
+}

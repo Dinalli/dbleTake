@@ -13,9 +13,14 @@
 		40215C41232B85ED001A90B1 /* dbleTake.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 40215C3F232B85ED001A90B1 /* dbleTake.xcdatamodeld */; };
 		40215C43232B85EF001A90B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40215C42232B85EF001A90B1 /* Assets.xcassets */; };
 		40215C46232B85EF001A90B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40215C44232B85EF001A90B1 /* LaunchScreen.storyboard */; };
+		40215C53232B911F001A90B1 /* ShutterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40215C52232B911F001A90B1 /* ShutterButton.swift */; };
+		406DD359232B91D800392121 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD358232B91D800392121 /* CaptureViewController.swift */; };
+		406DD35C232B91FB00392121 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD35B232B91FB00392121 /* PreviewView.swift */; };
+		9B46F5F4A6A43F36910FD706 /* Pods_dbleTake.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20ECEC925D768D3599E63139 /* Pods_dbleTake.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		20ECEC925D768D3599E63139 /* Pods_dbleTake.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dbleTake.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40215C33232B85ED001A90B1 /* dbleTake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dbleTake.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40215C36232B85ED001A90B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40215C38232B85ED001A90B1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +29,11 @@
 		40215C42232B85EF001A90B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40215C45232B85EF001A90B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		40215C47232B85EF001A90B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40215C52232B911F001A90B1 /* ShutterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShutterButton.swift; sourceTree = "<group>"; };
+		406DD358232B91D800392121 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		406DD35B232B91FB00392121 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		56C9592A8E8665FDA32300B0 /* Pods-dbleTake.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dbleTake.release.xcconfig"; path = "Target Support Files/Pods-dbleTake/Pods-dbleTake.release.xcconfig"; sourceTree = "<group>"; };
+		97728ADEA91311D519AB35A1 /* Pods-dbleTake.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dbleTake.debug.xcconfig"; path = "Target Support Files/Pods-dbleTake/Pods-dbleTake.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B46F5F4A6A43F36910FD706 /* Pods_dbleTake.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +53,8 @@
 			children = (
 				40215C35232B85ED001A90B1 /* dbleTake */,
 				40215C34232B85ED001A90B1 /* Products */,
+				8623F038B2EF3CFF51FC498B /* Pods */,
+				D8CC2F57753338D4062A7348 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +69,7 @@
 		40215C35232B85ED001A90B1 /* dbleTake */ = {
 			isa = PBXGroup;
 			children = (
+				406DD35A232B91EF00392121 /* AppleCode */,
 				40215C51232B87D4001A90B1 /* DataModel */,
 				40215C50232B8610001A90B1 /* CustomClasses */,
 				40215C4F232B8607001A90B1 /* Helpers */,
@@ -72,6 +86,7 @@
 		40215C4D232B85F8001A90B1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				406DD358232B91D800392121 /* CaptureViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -95,6 +110,7 @@
 		40215C50232B8610001A90B1 /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
+				40215C52232B911F001A90B1 /* ShutterButton.swift */,
 			);
 			path = CustomClasses;
 			sourceTree = "<group>";
@@ -107,6 +123,31 @@
 			path = DataModel;
 			sourceTree = "<group>";
 		};
+		406DD35A232B91EF00392121 /* AppleCode */ = {
+			isa = PBXGroup;
+			children = (
+				406DD35B232B91FB00392121 /* PreviewView.swift */,
+			);
+			path = AppleCode;
+			sourceTree = "<group>";
+		};
+		8623F038B2EF3CFF51FC498B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				97728ADEA91311D519AB35A1 /* Pods-dbleTake.debug.xcconfig */,
+				56C9592A8E8665FDA32300B0 /* Pods-dbleTake.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D8CC2F57753338D4062A7348 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				20ECEC925D768D3599E63139 /* Pods_dbleTake.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -114,6 +155,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 40215C4A232B85EF001A90B1 /* Build configuration list for PBXNativeTarget "dbleTake" */;
 			buildPhases = (
+				9C7CD12C7A1438497E11E61A /* [CP] Check Pods Manifest.lock */,
 				40215C2F232B85ED001A90B1 /* Sources */,
 				40215C30232B85ED001A90B1 /* Frameworks */,
 				40215C31232B85ED001A90B1 /* Resources */,
@@ -173,14 +215,42 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9C7CD12C7A1438497E11E61A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-dbleTake-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		40215C2F232B85ED001A90B1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				40215C41232B85ED001A90B1 /* dbleTake.xcdatamodeld in Sources */,
+				40215C53232B911F001A90B1 /* ShutterButton.swift in Sources */,
 				40215C37232B85ED001A90B1 /* AppDelegate.swift in Sources */,
 				40215C39232B85ED001A90B1 /* SceneDelegate.swift in Sources */,
+				406DD359232B91D800392121 /* CaptureViewController.swift in Sources */,
+				406DD35C232B91FB00392121 /* PreviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +392,7 @@
 		};
 		40215C4B232B85EF001A90B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97728ADEA91311D519AB35A1 /* Pods-dbleTake.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -340,6 +411,7 @@
 		};
 		40215C4C232B85EF001A90B1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 56C9592A8E8665FDA32300B0 /* Pods-dbleTake.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
