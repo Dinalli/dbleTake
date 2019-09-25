@@ -15,45 +15,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PjH-UV-n43" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PjH-UV-n43" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rDX-wl-wyG" customClass="ShutterButton" customModule="dbleTake" customModuleProvider="target">
-                                        <rect key="frame" x="177" y="794" width="60" height="60"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="A6s-F3-uym"/>
-                                            <constraint firstAttribute="height" constant="60" id="Qz6-rs-ZzX"/>
-                                        </constraints>
-                                        <connections>
-                                            <action selector="shutterTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="INX-SW-YGL"/>
-                                        </connections>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="rDX-wl-wyG" secondAttribute="bottom" constant="42" id="hG4-fg-ZIc"/>
-                                    <constraint firstItem="rDX-wl-wyG" firstAttribute="centerX" secondItem="PjH-UV-n43" secondAttribute="centerX" id="mZE-ja-pK2"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vc2-st-OZ4" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vc2-st-OZ4" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
                                 <rect key="frame" x="20" y="679" width="104" height="183"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Vc2-st-OZ4" secondAttribute="height" multiplier="104:183" id="UIr-yY-Ks0"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="PjH-UV-n43" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="OrO-wl-WPx"/>
-                            <constraint firstAttribute="bottom" secondItem="PjH-UV-n43" secondAttribute="bottom" id="a1Y-yc-ET9"/>
-                            <constraint firstItem="PjH-UV-n43" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="aMH-hQ-3n4"/>
-                            <constraint firstItem="Vc2-st-OZ4" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="dKa-eS-KSt"/>
-                            <constraint firstItem="PjH-UV-n43" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="gg5-2I-KsV"/>
-                            <constraint firstItem="Vc2-st-OZ4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="qEN-Ru-kbY"/>
-                            <constraint firstItem="Vc2-st-OZ4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="635" id="ya3-Fg-z0w"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>

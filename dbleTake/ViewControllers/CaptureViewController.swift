@@ -12,6 +12,9 @@ import Photos
 
 class CaptureViewController: UIViewController  {
 
+    let model = CaptureViewControllerModel()
+    var isMultiCamSupported:Bool = false
+
     @IBOutlet weak var backCameraPreview: PreviewView!
     @IBOutlet weak var frontCameraPreview: PreviewView!
     private weak var backCameraVideoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -26,9 +29,44 @@ class CaptureViewController: UIViewController  {
     let frontPhotoOutput = AVCapturePhotoOutput()
     let backPhotoOutput = AVCapturePhotoOutput()
 
+    var captureButton: ShutterButton?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpMultiCaptureSession()
+        model.frontCameraPreview = self.frontCameraPreview
+        model.backCameraPreview = self.backCameraPreview
+        if AVCaptureMultiCamSession.isMultiCamSupported {
+            isMultiCamSupported = true
+            setUpMultiCaptureSession()
+        } else {
+            print("MultiCam not supported on this device")
+            DispatchQueue.main.async {
+                let alertMessage = "MultiCam not supported on this device"
+                let message = NSLocalizedString("Switching to single Cam mode.", comment: alertMessage)
+                let alertController = UIAlertController(title: "MultiCam not supported on this device", message: message, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
+                }))
+                self.present(alertController, animated: true, completion: nil)
+            }
+            setUpSingleCamSession()
+        }
+
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        NotificationCenter.default.addObserver(self, selector: #selector(setCameraOrientation),
+                                        name: Notification.Name("UIDeviceOrientationDidChangeNotification"),
+                                        object: nil)
+    }
+
+    /// Creates the views in the model on first load
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if model.hasCreatedViews == false {
+            model.isMultiCam = isMultiCamSupported
+            model.createViews(view: self.view)
+            self.captureButton = model.captureButton
+            self.captureButton?.addTarget(self, action: #selector(shutterTapped), for: .touchUpInside)
+        }
+        model.layoutViews(view: self.view)
     }
 
     private func setUpMultiCaptureSession() {
@@ -45,18 +83,11 @@ class CaptureViewController: UIViewController  {
         }
     }
 
-    private func configureSession() {
-        guard AVCaptureMultiCamSession.isMultiCamSupported else {
-            print("MultiCam not supported on this device")
-            DispatchQueue.main.async {
-                let alertMessage = "Alert message when multi cam is not supported"
-                let message = NSLocalizedString("Multi Cam Not Supported", comment: alertMessage)
-                let alertController = UIAlertController(title: "Unsupported Device", message: message, preferredStyle: .alert)
-                self.present(alertController, animated: true, completion: nil)
-            }
-            return
-        }
+    private func setUpSingleCamSession() {
+        
+    }
 
+    private func configureSession() {
         session.beginConfiguration()
         guard configureBackCamera() else {
             print("Backcam configuration failed")
@@ -161,7 +192,34 @@ class CaptureViewController: UIViewController  {
         return true
     }
 
-    @IBAction func shutterTapped(_ sender: Any) {
+    /// Set the camera orientation when the device is rotated.
+    @objc func setCameraOrientation() {
+        switch UIDevice.current.orientation {
+        case .portrait:
+            self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
+            self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
+        case .portraitUpsideDown:
+            self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portraitUpsideDown
+            self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portraitUpsideDown
+        case .faceDown:
+            self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
+            self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
+        case .faceUp:
+            self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
+            self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
+        case .landscapeLeft:
+            self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .landscapeRight
+            self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .landscapeRight
+        case .landscapeRight:
+            self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .landscapeLeft
+            self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .landscapeLeft
+        default: // .unknown
+            self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
+            self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
+        }
+    }
+
+    @objc func shutterTapped(_ sender: Any) {
         let photoSettings: AVCapturePhotoSettings = AVCapturePhotoSettings()
         backPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
         frontPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
