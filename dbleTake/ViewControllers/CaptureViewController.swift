@@ -58,8 +58,8 @@ class CaptureViewController: UIViewController  {
     }
 
     /// Creates the views in the model on first load
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         if model.hasCreatedViews == false {
             model.isMultiCam = isMultiCamSupported
             model.createViews(view: self.view)

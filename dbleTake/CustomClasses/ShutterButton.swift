@@ -43,7 +43,7 @@ import UIKit
         outterCirclePathLayer.frame = bounds
         outterCirclePathLayer.lineWidth = 2
         outterCirclePathLayer.fillColor = UIColor.clear.cgColor
-        outterCirclePathLayer.strokeColor = UIColor.orange.cgColor
+        outterCirclePathLayer.strokeColor = UIColor.cyan.cgColor
         layer.addSublayer(outterCirclePathLayer)
         backgroundColor = .clear
     }

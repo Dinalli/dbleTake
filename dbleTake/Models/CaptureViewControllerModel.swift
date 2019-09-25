@@ -16,52 +16,98 @@ class CaptureViewControllerModel: NSObject {
     var captureButton: ShutterButton!
     var backCameraPreview: PreviewView!
     var frontCameraPreview: PreviewView!
-    
+
+    var captureButtonRightConstraint: NSLayoutConstraint!
+    var captureButtonBottomConstraint: NSLayoutConstraint!
+    var captureButtonCenterY: NSLayoutConstraint!
+    var captureButtonCenterX: NSLayoutConstraint!
+
+    var portraitfrontCameraWidthConstraint: NSLayoutConstraint!
+    var portraitfrontCameraHeightConstraint: NSLayoutConstraint!
+    var landscapefrontCameraWidthConstraint: NSLayoutConstraint!
+    var landscapefrontCameraHeightConstraint: NSLayoutConstraint!
+
     /// Creates the views lays them out for the VC
     func createViews(view: UIView) {
         hasCreatedViews = true
         createCaptureButton()
-    }
-
-
-    func layoutViews(view: UIView) {
+        view.addSubview(captureButton)
 
         frontCameraPreview.translatesAutoresizingMaskIntoConstraints = false
         backCameraPreview.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(captureButton)
+        captureButton.translatesAutoresizingMaskIntoConstraints = false
+
+        captureButtonRightConstraint = NSLayoutConstraint(item: captureButton as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: -90)
+        captureButtonBottomConstraint = NSLayoutConstraint(item: captureButton as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -90)
+        captureButtonCenterX = NSLayoutConstraint(item: captureButton as Any, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
+        captureButtonCenterY = NSLayoutConstraint(item: captureButton as Any, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
+
+        portraitfrontCameraWidthConstraint = NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 100)
+        portraitfrontCameraHeightConstraint = NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 180)
+
+        landscapefrontCameraWidthConstraint = NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 180)
+        landscapefrontCameraHeightConstraint = NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 100)
 
         view.addConstraints([
+            NSLayoutConstraint(item: captureButton as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 70),
+            NSLayoutConstraint(item: captureButton as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 70),
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5),
-            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .top, relatedBy: .lessThanOrEqual, toItem: view, attribute: .top, multiplier: 1, constant: view.frame.height - 180),
-            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .right, relatedBy: .lessThanOrEqual, toItem: view, attribute: .right, multiplier: 1, constant: view.frame.width - 105),
-            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .width, relatedBy: .lessThanOrEqual, toItem: view, attribute: .width, multiplier: 0, constant: 100),
-            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .height, relatedBy: .lessThanOrEqual, toItem: view, attribute: .height, multiplier: 0, constant: 180)
+            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5)
         ])
-        addConstraintsForCaptureButton(view: view)
+    }
+
+    func layoutViews(view: UIView) {
+        frontCameraPreview.translatesAutoresizingMaskIntoConstraints = false
+        backCameraPreview.translatesAutoresizingMaskIntoConstraints = false
+        captureButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        switch UIDevice.current.orientation {
+        case .portrait,
+             .portraitUpsideDown:
+            changeConstraintsForPortrait(view: view)
+        case .landscapeLeft, .landscapeRight:
+            changeConstraintsForLandscape(view: view)
+        default: // .unknown
+            changeConstraintsForPortrait(view: view)
+        }
+        changeConstraintsForCaptureButton(view: view)
+    }
+
+    func changeConstraintsForPortrait(view: UIView) {
+        NSLayoutConstraint.deactivate([landscapefrontCameraWidthConstraint, landscapefrontCameraHeightConstraint])
+        NSLayoutConstraint.activate([portraitfrontCameraHeightConstraint, portraitfrontCameraWidthConstraint])
+    }
+
+    func changeConstraintsForLandscape(view: UIView) {
+        NSLayoutConstraint.deactivate([portraitfrontCameraHeightConstraint, portraitfrontCameraWidthConstraint])
+        NSLayoutConstraint.activate([landscapefrontCameraWidthConstraint, landscapefrontCameraHeightConstraint])
     }
 
     /// Add Constraints for the new capture button depending on phone or ipad
-    func addConstraintsForCaptureButton(view: UIView) {
-        captureButton.translatesAutoresizingMaskIntoConstraints = false
+    func changeConstraintsForCaptureButton(view: UIView) {
+
         if UIDevice.current.userInterfaceIdiom == .pad {
-            view.addConstraints([
-                NSLayoutConstraint(item: captureButton as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: -15),
-                NSLayoutConstraint(item: captureButton as Any, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0),
-                NSLayoutConstraint(item: captureButton as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 70),
-                NSLayoutConstraint(item: captureButton as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 70)
-                ])
+            NSLayoutConstraint.deactivate([captureButtonCenterX])
+            NSLayoutConstraint.activate([captureButtonCenterY])
+            NSLayoutConstraint.deactivate([captureButtonBottomConstraint])
+            NSLayoutConstraint.activate([captureButtonRightConstraint])
         } else {
-            view.addConstraints([
-                NSLayoutConstraint(item: captureButton as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -90),
-                NSLayoutConstraint(item: captureButton as Any, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0),
-                NSLayoutConstraint(item: captureButton as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 70),
-                NSLayoutConstraint(item: captureButton as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 70)
-                ])
+            switch UIDevice.current.orientation {
+            case .portrait,
+                 .portraitUpsideDown:
+                NSLayoutConstraint.deactivate([captureButtonCenterY, captureButtonRightConstraint])
+                NSLayoutConstraint.activate([captureButtonBottomConstraint, captureButtonCenterX])
+            case .landscapeLeft, .landscapeRight:
+                NSLayoutConstraint.deactivate([captureButtonBottomConstraint, captureButtonCenterX])
+                NSLayoutConstraint.activate([captureButtonCenterY, captureButtonRightConstraint])
+            default: // .unknown
+                NSLayoutConstraint.deactivate([captureButtonCenterY, captureButtonRightConstraint])
+                NSLayoutConstraint.activate([captureButtonBottomConstraint, captureButtonCenterX])
+            }
         }
     }
 
@@ -69,12 +115,9 @@ class CaptureViewControllerModel: NSObject {
     func createCaptureButton() {
         captureButton = ShutterButton(type: .custom)
         captureButton.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
-        captureButton.translatesAutoresizingMaskIntoConstraints = false
         captureButton.layer.shadowOffset = CGSize(width: 0, height: 6)
         captureButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.48).cgColor
         captureButton.layer.shadowOpacity = 1
         captureButton.layer.shadowRadius = 10
-        captureButton.isEnabled = false
-        captureButton.setDisabled()
     }
 }

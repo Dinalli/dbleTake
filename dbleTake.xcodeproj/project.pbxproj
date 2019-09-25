@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		40215C37232B85ED001A90B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40215C36232B85ED001A90B1 /* AppDelegate.swift */; };
 		40215C39232B85ED001A90B1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40215C38232B85ED001A90B1 /* SceneDelegate.swift */; };
-		40215C3E232B85ED001A90B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40215C3C232B85ED001A90B1 /* Main.storyboard */; };
+		40215C3E232B85ED001A90B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40215C3C232B85ED001A90B1 /* Main.storyboard */; settings = {ASSET_TAGS = (backCamerarPreview, ); }; };
 		40215C41232B85ED001A90B1 /* dbleTake.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 40215C3F232B85ED001A90B1 /* dbleTake.xcdatamodeld */; };
 		40215C43232B85EF001A90B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40215C42232B85EF001A90B1 /* Assets.xcassets */; };
 		40215C46232B85EF001A90B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40215C44232B85EF001A90B1 /* LaunchScreen.storyboard */; };
@@ -186,6 +186,9 @@
 		40215C2B232B85ED001A90B1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					backCamerarPreview,
+				);
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = dinalli;

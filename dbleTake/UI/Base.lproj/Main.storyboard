@@ -15,12 +15,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PjH-UV-n43" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
+                            <view contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="backCamerarPreview" translatesAutoresizingMaskIntoConstraints="NO" id="PjH-UV-n43" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="backCamerarPreview"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vc2-st-OZ4" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
+                            <view contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="frontCamerarPreview" translatesAutoresizingMaskIntoConstraints="NO" id="Vc2-st-OZ4" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
                                 <rect key="frame" x="20" y="679" width="104" height="183"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
