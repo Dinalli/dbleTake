@@ -26,6 +26,9 @@ class CaptureViewController: UIViewController  {
     var backCameraDeviceInput: AVCaptureDeviceInput?
     var frontCameraDeviceInput: AVCaptureDeviceInput?
 
+    var frontCameraVideoPreviewLayerConnection: AVCaptureConnection!
+    var backCameraVideoPreviewLayerConnection: AVCaptureConnection!
+
     let frontPhotoOutput = AVCapturePhotoOutput()
     let backPhotoOutput = AVCapturePhotoOutput()
 
@@ -139,7 +142,7 @@ class CaptureViewController: UIViewController  {
             return false
         }
         session.addOutput(backPhotoOutput)
-        let backCameraVideoPreviewLayerConnection = AVCaptureConnection(inputPort: backCameraVideoPort, videoPreviewLayer: backCameraVideoPreviewLayer)
+        backCameraVideoPreviewLayerConnection = AVCaptureConnection(inputPort: backCameraVideoPort, videoPreviewLayer: backCameraVideoPreviewLayer)
         guard session.canAddConnection(backCameraVideoPreviewLayerConnection) else {
             print("Could not add a connection to the back camera video preview layer")
             return false
@@ -183,7 +186,7 @@ class CaptureViewController: UIViewController  {
         guard let frontCameraVideoPreviewLayer = frontCameraVideoPreviewLayer else {
             return false
         }
-        let frontCameraVideoPreviewLayerConnection = AVCaptureConnection(inputPort: frontCameraVideoPort, videoPreviewLayer: frontCameraVideoPreviewLayer)
+        frontCameraVideoPreviewLayerConnection = AVCaptureConnection(inputPort: frontCameraVideoPort, videoPreviewLayer: frontCameraVideoPreviewLayer)
         guard session.canAddConnection(frontCameraVideoPreviewLayerConnection) else {
             print("Could not add a connection to the back camera video preview layer")
             return false
@@ -199,12 +202,15 @@ class CaptureViewController: UIViewController  {
             self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
             self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
         case .portraitUpsideDown:
+            print("portrait upside down")
             self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portraitUpsideDown
             self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portraitUpsideDown
         case .faceDown:
+            print("facedown")
             self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
             self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
         case .faceUp:
+             print("faceup")
             self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
             self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
         case .landscapeLeft:
@@ -223,6 +229,10 @@ class CaptureViewController: UIViewController  {
         let photoSettings: AVCapturePhotoSettings = AVCapturePhotoSettings()
         backPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
         frontPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
+    }
+
+    @IBAction func switchCameras(_ sender: Any) {
+        model.switchCameras(view: self.view)
     }
 }
 

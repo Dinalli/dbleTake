@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 
 class CaptureViewControllerModel: NSObject {
 
@@ -26,6 +27,16 @@ class CaptureViewControllerModel: NSObject {
     var portraitfrontCameraHeightConstraint: NSLayoutConstraint!
     var landscapefrontCameraWidthConstraint: NSLayoutConstraint!
     var landscapefrontCameraHeightConstraint: NSLayoutConstraint!
+
+    var portraitBackCameraWidthConstraint: NSLayoutConstraint!
+    var portraitBackCameraHeightConstraint: NSLayoutConstraint!
+    var landscapeBackCameraWidthConstraint: NSLayoutConstraint!
+    var landscapeBackCameraHeightConstraint: NSLayoutConstraint!
+
+    var frontCameraConstraints: [NSLayoutConstraint]!
+    var backCameraConstraints: [NSLayoutConstraint]!
+
+    private var cameraDevicePosition: AVCaptureDevice.Position = .front
 
     /// Creates the views lays them out for the VC
     func createViews(view: UIView) {
@@ -48,16 +59,38 @@ class CaptureViewControllerModel: NSObject {
         landscapefrontCameraWidthConstraint = NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 180)
         landscapefrontCameraHeightConstraint = NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 100)
 
+        portraitBackCameraWidthConstraint = NSLayoutConstraint(item: backCameraPreview as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 100)
+        portraitBackCameraHeightConstraint = NSLayoutConstraint(item: backCameraPreview as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 180)
+
+        landscapeBackCameraWidthConstraint = NSLayoutConstraint(item: backCameraPreview as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 180)
+        landscapeBackCameraHeightConstraint = NSLayoutConstraint(item: backCameraPreview as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 100)
+
         view.addConstraints([
             NSLayoutConstraint(item: captureButton as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 70),
             NSLayoutConstraint(item: captureButton as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 70),
+        ])
+
+        frontCameraConstraints = [
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5)
-        ])
+            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5),
+            portraitfrontCameraWidthConstraint, portraitfrontCameraHeightConstraint, landscapefrontCameraWidthConstraint, landscapefrontCameraHeightConstraint
+        ]
+
+        backCameraConstraints = [
+            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: backCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: backCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5),
+            portraitBackCameraWidthConstraint, portraitBackCameraHeightConstraint, landscapeBackCameraWidthConstraint, landscapeBackCameraHeightConstraint
+        ]
+
+        NSLayoutConstraint.activate(frontCameraConstraints)
     }
 
     func layoutViews(view: UIView) {
@@ -119,5 +152,28 @@ class CaptureViewControllerModel: NSObject {
         captureButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.48).cgColor
         captureButton.layer.shadowOpacity = 1
         captureButton.layer.shadowRadius = 10
+    }
+
+    func switchCameras(view: UIView){
+        // Disable animations so the views move immediately
+        CATransaction.begin()
+        UIView.setAnimationsEnabled(false)
+        CATransaction.setDisableActions(true)
+
+        if cameraDevicePosition == .front {
+            NSLayoutConstraint.deactivate(frontCameraConstraints)
+            NSLayoutConstraint.activate(backCameraConstraints)
+            view.sendSubviewToBack(frontCameraPreview)
+            cameraDevicePosition = .back
+        } else {
+            NSLayoutConstraint.deactivate(backCameraConstraints)
+            NSLayoutConstraint.activate(frontCameraConstraints)
+            view.sendSubviewToBack(backCameraPreview)
+            cameraDevicePosition = .front
+        }
+
+        CATransaction.commit()
+        UIView.setAnimationsEnabled(true)
+        CATransaction.setDisableActions(false)
     }
 }
