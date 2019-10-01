@@ -11,7 +11,7 @@
         <scene sceneID="BKa-mX-5sZ">
             <objects>
                 <navigationController id="9n0-lC-To2" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9ky-gF-bQu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="9ky-gF-bQu">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -48,11 +48,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="Jce-8B-WcP">
                         <barButtonItem key="leftBarButtonItem" image="camera" id="cdB-mf-f6E">
+                            <color key="tintColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="switchCameras:" destination="BYZ-38-t0r" id="thG-MY-S4Y"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="856-lightning-bolt" id="aMd-IE-6v8">
+                            <color key="tintColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="switchFlashMode:" destination="BYZ-38-t0r" id="K9f-Mr-fsg"/>
                             </connections>
