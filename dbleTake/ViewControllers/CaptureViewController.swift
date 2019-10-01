@@ -32,6 +32,7 @@ class CaptureViewController: UIViewController  {
     let frontPhotoOutput = AVCapturePhotoOutput()
     let backPhotoOutput = AVCapturePhotoOutput()
 
+    @IBOutlet weak var flashButton: UIBarButtonItem!
     var captureButton: ShutterButton?
 
     override func viewDidLoad() {
@@ -65,6 +66,7 @@ class CaptureViewController: UIViewController  {
         super.viewWillLayoutSubviews()
         if model.hasCreatedViews == false {
             model.isMultiCam = isMultiCamSupported
+            model.flashButton = flashButton
             model.createViews(view: self.view)
             self.captureButton = model.captureButton
             self.captureButton?.addTarget(self, action: #selector(shutterTapped), for: .touchUpInside)
@@ -112,7 +114,8 @@ class CaptureViewController: UIViewController  {
             print("Could not find the back camera")
             return false
         }
-
+        model.captureCameraDevice = backCamera
+        model.checkHasFlash()
         // Add the back camera input to the session
         do {
             backCameraDeviceInput = try AVCaptureDeviceInput(device: backCamera)
@@ -227,12 +230,17 @@ class CaptureViewController: UIViewController  {
 
     @objc func shutterTapped(_ sender: Any) {
         let photoSettings: AVCapturePhotoSettings = AVCapturePhotoSettings()
+        photoSettings.flashMode = model.flashMode()
         backPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
         frontPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
     }
 
     @IBAction func switchCameras(_ sender: Any) {
         model.switchCameras(view: self.view)
+    }
+
+    @IBAction func switchFlashMode(_ sender: Any) {
+        model.changeFlash()
     }
 }
 

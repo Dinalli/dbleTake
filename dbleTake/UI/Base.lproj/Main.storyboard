@@ -52,10 +52,15 @@
                                 <action selector="switchCameras:" destination="BYZ-38-t0r" id="thG-MY-S4Y"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="856-lightning-bolt" id="aMd-IE-6v8"/>
+                        <barButtonItem key="rightBarButtonItem" image="856-lightning-bolt" id="aMd-IE-6v8">
+                            <connections>
+                                <action selector="switchFlashMode:" destination="BYZ-38-t0r" id="K9f-Mr-fsg"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="backCameraPreview" destination="PjH-UV-n43" id="r6Y-hh-Vzp"/>
+                        <outlet property="flashButton" destination="aMd-IE-6v8" id="DGN-Xn-QIN"/>
                         <outlet property="frontCameraPreview" destination="Vc2-st-OZ4" id="ux5-cp-5Bd"/>
                     </connections>
                 </viewController>

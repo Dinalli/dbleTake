@@ -17,6 +17,7 @@ class CaptureViewControllerModel: NSObject {
     var captureButton: ShutterButton!
     var backCameraPreview: PreviewView!
     var frontCameraPreview: PreviewView!
+    var flashButton: UIBarButtonItem!
 
     var captureButtonRightConstraint: NSLayoutConstraint!
     var captureButtonBottomConstraint: NSLayoutConstraint!
@@ -36,7 +37,62 @@ class CaptureViewControllerModel: NSObject {
     var frontCameraConstraints: [NSLayoutConstraint]!
     var backCameraConstraints: [NSLayoutConstraint]!
 
+    var captureCameraDevice: AVCaptureDevice!
+
     private var cameraDevicePosition: AVCaptureDevice.Position = .front
+
+    /// Flash mode enum - Auto, On, Off
+    enum UserFlashMode {
+        /// Used when flash mode is set to Auto
+        case flashModeAuto
+        /// Used when flash mode is set to On
+        case flashModeOn
+        /// Used when flash mode is set to Off
+        case flashModeOff
+    }
+
+    /// Current mode that is set by the user, default to Off
+    var currentUserFlashMode = UserFlashMode.flashModeOff
+
+    /// Allow the user to change the flash settings if we have one on the device.
+    func changeFlash() {
+        if captureCameraDevice.hasFlash {
+            switch currentUserFlashMode {
+            case .flashModeOff:
+                self.flashButton.image = UIImage(named: "flash-auto")
+                currentUserFlashMode = .flashModeAuto
+            case .flashModeAuto:
+                self.flashButton.image = UIImage(named: "flash-on")
+                currentUserFlashMode = .flashModeOn
+            case .flashModeOn:
+                self.flashButton.image = UIImage(named: "856-lightning-bolt")
+                currentUserFlashMode = .flashModeOff
+            }
+        } else {
+            flashButton.isEnabled = false
+        }
+    }
+
+    /// Checks if we have flash enabled on the device
+    func checkHasFlash() {
+        if captureCameraDevice != nil && !captureCameraDevice.hasFlash {
+            flashButton.isEnabled = false
+        }
+    }
+
+    /// returns the current flash mode of the device
+    func flashMode() -> AVCaptureDevice.FlashMode {
+        if captureCameraDevice.hasFlash {
+            if currentUserFlashMode == UserFlashMode.flashModeAuto {
+                return .auto
+            } else if currentUserFlashMode == UserFlashMode.flashModeOn {
+                return .on
+            } else {
+                return .off
+            }
+        }
+        return .off
+    }
 
     /// Creates the views lays them out for the VC
     func createViews(view: UIView) {
@@ -122,7 +178,6 @@ class CaptureViewControllerModel: NSObject {
 
     /// Add Constraints for the new capture button depending on phone or ipad
     func changeConstraintsForCaptureButton(view: UIView) {
-
         if UIDevice.current.userInterfaceIdiom == .pad {
             NSLayoutConstraint.deactivate([captureButtonCenterX])
             NSLayoutConstraint.activate([captureButtonCenterY])
