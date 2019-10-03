@@ -147,6 +147,7 @@ class CaptureViewControllerModel: NSObject {
         ]
 
         NSLayoutConstraint.activate(frontCameraConstraints)
+        if !isMultiCam { frontCameraPreview.isHidden = true }
     }
 
     func layoutViews(view: UIView) {

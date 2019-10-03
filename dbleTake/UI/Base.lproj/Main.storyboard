@@ -34,7 +34,7 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="backCamerarPreview" translatesAutoresizingMaskIntoConstraints="NO" id="PjH-UV-n43" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="backCamerarPreview"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="frontCamerarPreview" translatesAutoresizingMaskIntoConstraints="NO" id="Vc2-st-OZ4" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
@@ -53,12 +53,17 @@
                                 <action selector="switchCameras:" destination="BYZ-38-t0r" id="thG-MY-S4Y"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="856-lightning-bolt" id="aMd-IE-6v8">
-                            <color key="tintColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="switchFlashMode:" destination="BYZ-38-t0r" id="K9f-Mr-fsg"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="856-lightning-bolt" id="aMd-IE-6v8">
+                                <color key="tintColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="switchFlashMode:" destination="BYZ-38-t0r" id="K9f-Mr-fsg"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="timer" id="gzI-Od-BKV">
+                                <color key="tintColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="backCameraPreview" destination="PjH-UV-n43" id="r6Y-hh-Vzp"/>
@@ -74,5 +79,6 @@
     <resources>
         <image name="856-lightning-bolt" width="14" height="28"/>
         <image name="camera" width="30" height="30"/>
+        <image name="timer" width="30" height="30"/>
     </resources>
 </document>

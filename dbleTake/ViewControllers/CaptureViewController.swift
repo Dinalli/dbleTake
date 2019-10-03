@@ -20,7 +20,7 @@ class CaptureViewController: UIViewController  {
     private weak var backCameraVideoPreviewLayer: AVCaptureVideoPreviewLayer?
     private weak var frontCameraVideoPreviewLayer: AVCaptureVideoPreviewLayer?
 
-    private let session = AVCaptureMultiCamSession()
+    private var session: AVCaptureSession!
     private let sessionQueue = DispatchQueue(label: "session queue") // Communicate with the session and other session objects on this queue.
 
     var backCameraDeviceInput: AVCaptureDeviceInput?
@@ -31,6 +31,9 @@ class CaptureViewController: UIViewController  {
 
     let frontPhotoOutput = AVCapturePhotoOutput()
     let backPhotoOutput = AVCapturePhotoOutput()
+
+    // Use for single cam mode only
+    var singleCapturePosition: AVCaptureDevice.Position!
 
     @IBOutlet weak var flashButton: UIBarButtonItem!
     var captureButton: ShutterButton?
@@ -75,6 +78,7 @@ class CaptureViewController: UIViewController  {
     }
 
     private func setUpMultiCaptureSession() {
+        session = AVCaptureMultiCamSession()
         // Set up the back and front video preview views.
         backCameraPreview.videoPreviewLayer.setSessionWithNoConnection(session)
         frontCameraPreview.videoPreviewLayer.setSessionWithNoConnection(session)
@@ -84,15 +88,31 @@ class CaptureViewController: UIViewController  {
         frontCameraVideoPreviewLayer = frontCameraPreview.videoPreviewLayer
 
         sessionQueue.async {
-            self.configureSession()
+            self.configureMultiSession()
         }
     }
 
     private func setUpSingleCamSession() {
-        
+        session = AVCaptureSession()
+        backCameraPreview.videoPreviewLayer.setSessionWithNoConnection(session)
+        backCameraVideoPreviewLayer = backCameraPreview.videoPreviewLayer
+        sessionQueue.async {
+            self.configureSingleSession()
+        }
+        singleCapturePosition = .back
     }
 
-    private func configureSession() {
+    private func configureSingleSession() {
+        session.beginConfiguration()
+        guard configureBackCamera() else {
+            print("Backcam configuration failed")
+            return
+        }
+        session.commitConfiguration()
+        session.startRunning()
+    }
+
+    private func configureMultiSession() {
         session.beginConfiguration()
         guard configureBackCamera() else {
             print("Backcam configuration failed")
@@ -103,7 +123,6 @@ class CaptureViewController: UIViewController  {
             print("FrontCam configuration failed")
             return
         }
-
         session.commitConfiguration()
         session.startRunning()
     }
@@ -114,6 +133,7 @@ class CaptureViewController: UIViewController  {
             print("Could not find the back camera")
             return false
         }
+
         model.captureCameraDevice = backCamera
         model.checkHasFlash()
         // Add the back camera input to the session
@@ -167,7 +187,7 @@ class CaptureViewController: UIViewController  {
 
             guard let frontCameraDeviceInput = frontCameraDeviceInput,
                 session.canAddInput(frontCameraDeviceInput) else {
-                    print("Could not add back camera device input")
+                    print("Could not add front camera device input")
                     return false
             }
             session.addInputWithNoConnections(frontCameraDeviceInput)
@@ -191,11 +211,66 @@ class CaptureViewController: UIViewController  {
         }
         frontCameraVideoPreviewLayerConnection = AVCaptureConnection(inputPort: frontCameraVideoPort, videoPreviewLayer: frontCameraVideoPreviewLayer)
         guard session.canAddConnection(frontCameraVideoPreviewLayerConnection) else {
+            print("Could not add a connection to the front camera video preview layer")
+            return false
+        }
+        session.addConnection(frontCameraVideoPreviewLayerConnection)
+        return true
+    }
+
+    private func configureFrontSingleCamera() -> Bool {
+        // Find the back camera
+        guard let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else {
+            print("Could not find the front camera")
+            return false
+        }
+
+        // Add the back camera input to the session
+        do {
+            frontCameraDeviceInput = try AVCaptureDeviceInput(device: frontCamera)
+
+            guard let frontCameraDeviceInput = frontCameraDeviceInput,
+                session.canAddInput(frontCameraDeviceInput) else {
+                    print("Could not add front camera device input")
+                    return false
+            }
+            session.addInputWithNoConnections(frontCameraDeviceInput)
+        } catch {
+            print("Could not create front camera device input: \(error)")
+            return false
+        }
+
+        // Find the back camera device input's video port
+        guard let frontCameraDeviceInput = frontCameraDeviceInput,
+            let frontCameraVideoPort = frontCameraDeviceInput.ports(for: .video,
+                                                              sourceDeviceType: frontCamera.deviceType,
+                                                              sourceDevicePosition: frontCamera.position).first else {
+                                                                print("Could not find the back camera device input's video port")
+                                                                return false
+        }
+        session.addOutput(frontPhotoOutput)
+        // Connect the back camera device input to the back camera video preview layer
+        guard let backCameraVideoPreviewLayer = backCameraVideoPreviewLayer else {
+            return false
+        }
+        frontCameraVideoPreviewLayerConnection = AVCaptureConnection(inputPort: frontCameraVideoPort, videoPreviewLayer: backCameraVideoPreviewLayer)
+        guard session.canAddConnection(frontCameraVideoPreviewLayerConnection) else {
             print("Could not add a connection to the back camera video preview layer")
             return false
         }
         session.addConnection(frontCameraVideoPreviewLayerConnection)
         return true
+    }
+
+
+    /// Gets the best camera for the position
+    func bestDevice(in position: AVCaptureDevice.Position) -> AVCaptureDevice? {
+        let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes:
+            [.builtInTrueDepthCamera, .builtInDualCamera, .builtInWideAngleCamera],
+                                                                mediaType: .video, position: position)
+        let devices = discoverySession.devices
+        guard !devices.isEmpty else { return nil }
+        return devices.first(where: { device in device.position == position })!
     }
 
     /// Set the camera orientation when the device is rotated.
@@ -232,11 +307,53 @@ class CaptureViewController: UIViewController  {
         let photoSettings: AVCapturePhotoSettings = AVCapturePhotoSettings()
         photoSettings.flashMode = model.flashMode()
         backPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
-        frontPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
+        if isMultiCamSupported {
+            frontPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
+        } else {
+            // switch to other cam and take photo
+            switchSingleCamera { (success) in
+                if success {
+                    self.frontPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
+                } else {
+                    print("FrontCam capture failed")
+                }
+            }
+        }
+    }
+
+    func switchSingleCamera(completion: @escaping (Bool) -> Void) {
+        session.beginConfiguration()
+        if singleCapturePosition == .back {
+            session.removeInput(backCameraDeviceInput!)
+            session.removeOutput(backPhotoOutput)
+            guard configureFrontSingleCamera() else {
+                print("FrontCam configuration failed")
+                completion(false)
+                return
+            }
+            singleCapturePosition = .front
+        } else {
+            session.removeInput(frontCameraDeviceInput!)
+            session.removeOutput(frontPhotoOutput)
+            guard configureBackCamera() else {
+                print("backCam configuration failed")
+                completion(false)
+                return
+            }
+            singleCapturePosition = .back
+        }
+        session.commitConfiguration()
+        session.startRunning()
+        completion(true)
     }
 
     @IBAction func switchCameras(_ sender: Any) {
-        model.switchCameras(view: self.view)
+        if isMultiCamSupported {
+            model.switchCameras(view: self.view)
+        } else {
+            switchSingleCamera { (success) in
+            }
+        }
     }
 
     @IBAction func switchFlashMode(_ sender: Any) {
