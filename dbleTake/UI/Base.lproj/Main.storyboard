@@ -34,7 +34,7 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="backCamerarPreview" translatesAutoresizingMaskIntoConstraints="NO" id="PjH-UV-n43" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration" identifier="backCamerarPreview"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="frontCamerarPreview" translatesAutoresizingMaskIntoConstraints="NO" id="Vc2-st-OZ4" customClass="PreviewView" customModule="dbleTake" customModuleProvider="target">
@@ -62,6 +62,9 @@
                             </barButtonItem>
                             <barButtonItem title="Item" image="timer" id="gzI-Od-BKV">
                                 <color key="tintColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="timerTapped:" destination="BYZ-38-t0r" id="TPg-oY-4mz"/>
+                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>

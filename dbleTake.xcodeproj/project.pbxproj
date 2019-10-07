@@ -14,8 +14,10 @@
 		40215C43232B85EF001A90B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40215C42232B85EF001A90B1 /* Assets.xcassets */; };
 		40215C46232B85EF001A90B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40215C44232B85EF001A90B1 /* LaunchScreen.storyboard */; };
 		40215C53232B911F001A90B1 /* ShutterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40215C52232B911F001A90B1 /* ShutterButton.swift */; };
+		403ADA74234A5DDD004F1295 /* TimerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403ADA73234A5DDD004F1295 /* TimerButtons.swift */; };
 		406DD359232B91D800392121 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD358232B91D800392121 /* CaptureViewController.swift */; };
 		406DD35C232B91FB00392121 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD35B232B91FB00392121 /* PreviewView.swift */; };
+		407F43B923473F7400FD0F4B /* ToastButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407F43B823473F7400FD0F4B /* ToastButtonBar.swift */; };
 		40BE5DCA232BC0F60070B740 /* CaptureViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE5DC9232BC0F60070B740 /* CaptureViewControllerModel.swift */; };
 		9B46F5F4A6A43F36910FD706 /* Pods_dbleTake.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20ECEC925D768D3599E63139 /* Pods_dbleTake.framework */; };
 /* End PBXBuildFile section */
@@ -31,8 +33,10 @@
 		40215C45232B85EF001A90B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		40215C47232B85EF001A90B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40215C52232B911F001A90B1 /* ShutterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShutterButton.swift; sourceTree = "<group>"; };
+		403ADA73234A5DDD004F1295 /* TimerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerButtons.swift; sourceTree = "<group>"; };
 		406DD358232B91D800392121 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		406DD35B232B91FB00392121 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		407F43B823473F7400FD0F4B /* ToastButtonBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastButtonBar.swift; sourceTree = "<group>"; };
 		40BE5DC9232BC0F60070B740 /* CaptureViewControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewControllerModel.swift; sourceTree = "<group>"; };
 		56C9592A8E8665FDA32300B0 /* Pods-dbleTake.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dbleTake.release.xcconfig"; path = "Target Support Files/Pods-dbleTake/Pods-dbleTake.release.xcconfig"; sourceTree = "<group>"; };
 		97728ADEA91311D519AB35A1 /* Pods-dbleTake.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dbleTake.debug.xcconfig"; path = "Target Support Files/Pods-dbleTake/Pods-dbleTake.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				40215C52232B911F001A90B1 /* ShutterButton.swift */,
+				407F43B823473F7400FD0F4B /* ToastButtonBar.swift */,
+				403ADA73234A5DDD004F1295 /* TimerButtons.swift */,
 			);
 			path = CustomClasses;
 			sourceTree = "<group>";
@@ -262,6 +268,8 @@
 				40215C41232B85ED001A90B1 /* dbleTake.xcdatamodeld in Sources */,
 				40215C53232B911F001A90B1 /* ShutterButton.swift in Sources */,
 				40215C37232B85ED001A90B1 /* AppDelegate.swift in Sources */,
+				407F43B923473F7400FD0F4B /* ToastButtonBar.swift in Sources */,
+				403ADA74234A5DDD004F1295 /* TimerButtons.swift in Sources */,
 				40BE5DCA232BC0F60070B740 /* CaptureViewControllerModel.swift in Sources */,
 				40215C39232B85ED001A90B1 /* SceneDelegate.swift in Sources */,
 				406DD359232B91D800392121 /* CaptureViewController.swift in Sources */,

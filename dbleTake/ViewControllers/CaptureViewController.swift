@@ -38,6 +38,11 @@ class CaptureViewController: UIViewController  {
     @IBOutlet weak var flashButton: UIBarButtonItem!
     var captureButton: ShutterButton?
 
+    var timerButtons: TimerButtons!
+    var isTimerButtonShown: Bool = false
+    var countdownTimer: Timer!
+    var countdownInt: Int = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         model.frontCameraPreview = self.frontCameraPreview
@@ -304,6 +309,10 @@ class CaptureViewController: UIViewController  {
     }
 
     @objc func shutterTapped(_ sender: Any) {
+        capturePhotos()
+    }
+
+    func capturePhotos() {
         let photoSettings: AVCapturePhotoSettings = AVCapturePhotoSettings()
         photoSettings.flashMode = model.flashMode()
         backPhotoOutput.capturePhoto(with: photoSettings, delegate: self)
@@ -359,6 +368,33 @@ class CaptureViewController: UIViewController  {
     @IBAction func switchFlashMode(_ sender: Any) {
         model.changeFlash()
     }
+
+    @IBAction func timerTapped(_ sender: UIBarButtonItem){
+        if isTimerButtonShown {
+            timerButtons.removeFromSuperview()
+            isTimerButtonShown = false
+        } else {
+            let frame = CGRect(x: 0, y: self.view.frame.height - 240, width: self.view.frame.width - 60, height: 80)
+            timerButtons = TimerButtons(frame: frame)
+            timerButtons.center.x = self.view.center.x
+            timerButtons.delegate = self
+            self.view.addSubview(timerButtons)
+            isTimerButtonShown = true
+        }
+    }
+
+    func startCountdown(timerInterval: TimeInterval) {
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+            self.model.setCountdownLabel(counter: "\(self.countdownInt)")
+            self.model.countdownLabel.isHidden = false
+            self.countdownInt -= 1
+            if self.countdownInt == -1 {
+                self.capturePhotos()
+                self.countdownTimer.invalidate()
+                self.model.countdownLabel.isHidden = true
+            }
+        })
+    }
 }
 
 extension CaptureViewController: AVCapturePhotoCaptureDelegate {
@@ -386,5 +422,14 @@ extension CaptureViewController: AVCapturePhotoCaptureDelegate {
                 })
             }
         }
+    }
+}
+
+extension CaptureViewController: TimerButtonDelegate {
+    func timerSet(time: TimeInterval) {
+        timerButtons.removeFromSuperview()
+        isTimerButtonShown = false
+        countdownInt = Int(time)
+        startCountdown(timerInterval: time)
     }
 }

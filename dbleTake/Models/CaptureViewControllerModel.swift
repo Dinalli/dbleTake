@@ -41,6 +41,8 @@ class CaptureViewControllerModel: NSObject {
 
     private var cameraDevicePosition: AVCaptureDevice.Position = .front
 
+    var countdownLabel: UILabel!
+
     /// Flash mode enum - Auto, On, Off
     enum UserFlashMode {
         /// Used when flash mode is set to Auto
@@ -98,11 +100,14 @@ class CaptureViewControllerModel: NSObject {
     func createViews(view: UIView) {
         hasCreatedViews = true
         createCaptureButton()
+        createCountdownLabel()
+        view.addSubview(countdownLabel)
         view.addSubview(captureButton)
 
         frontCameraPreview.translatesAutoresizingMaskIntoConstraints = false
         backCameraPreview.translatesAutoresizingMaskIntoConstraints = false
         captureButton.translatesAutoresizingMaskIntoConstraints = false
+        countdownLabel.translatesAutoresizingMaskIntoConstraints = false
 
         captureButtonRightConstraint = NSLayoutConstraint(item: captureButton as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: -90)
         captureButtonBottomConstraint = NSLayoutConstraint(item: captureButton as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -90)
@@ -124,6 +129,10 @@ class CaptureViewControllerModel: NSObject {
         view.addConstraints([
             NSLayoutConstraint(item: captureButton as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 70),
             NSLayoutConstraint(item: captureButton as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 70),
+            NSLayoutConstraint(item: countdownLabel as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: 70),
+            NSLayoutConstraint(item: countdownLabel as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: 70),
+            NSLayoutConstraint(item: countdownLabel as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: -10),
+            NSLayoutConstraint(item: countdownLabel as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1, constant: 0)
         ])
 
         frontCameraConstraints = [
@@ -210,6 +219,16 @@ class CaptureViewControllerModel: NSObject {
         captureButton.layer.shadowRadius = 10
     }
 
+    /// Creates the capture button and returns it
+    func createCountdownLabel() {
+        countdownLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
+        countdownLabel.textColor = UIColor.white
+        countdownLabel.layer.shadowOffset = CGSize(width: 0, height: 6)
+        countdownLabel.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.48).cgColor
+        countdownLabel.layer.shadowOpacity = 1
+        countdownLabel.layer.shadowRadius = 10
+    }
+
     func switchCameras(view: UIView){
         // Disable animations so the views move immediately
         CATransaction.begin()
@@ -231,5 +250,9 @@ class CaptureViewControllerModel: NSObject {
         CATransaction.commit()
         UIView.setAnimationsEnabled(true)
         CATransaction.setDisableActions(false)
+    }
+
+    func setCountdownLabel(counter: String) {
+        countdownLabel.text = counter
     }
 }
