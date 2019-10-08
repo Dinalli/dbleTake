@@ -12,49 +12,30 @@ class MergedViewController: UIViewController {
 
     var frontImage: UIImage!
     var backImage: UIImage!
-    
+
+    @IBOutlet weak var imageViewFront: UIImageView!
+    @IBOutlet weak var imageViewBack: UIImageView!
     @IBOutlet weak var mergedImageView: UIImageView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let mergedImage = UIImage(data: blendImages(frontImage, backImage)!)
-        mergedImageView.image = mergedImage
-    }
+        imageViewBack.image = backImage
+        imageViewFront.image = frontImage
 
-    func blendImages(_ img: UIImage,_ imgTwo: UIImage) -> Data? {
-        let bottomImage = img
-        let topImage = imgTwo
+        imageViewFront.contentMode = .scaleAspectFill
+        imageViewBack.contentMode = .scaleAspectFill
 
-        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 306, height: 306))
-        let imgView2 = UIImageView(frame: CGRect(x: 0, y: 0, width: 306, height: 306))
+        let size = CGSize(width: frontImage!.size.width + backImage!.size.width , height: frontImage!.size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
 
-        // - Set Content mode to what you desire
-        imgView.contentMode = .scaleAspectFill
-        imgView2.contentMode = .scaleAspectFit
+        frontImage!.draw(in: CGRect(x: 0, y: 0, width: frontImage!.size.width, height: size.height))
+        backImage!.draw(in: CGRect(x: frontImage!.size.width, y: 0, width: backImage!.size.width, height: size.height))
 
-        // - Set Images
-        imgView.image = bottomImage
-        imgView2.image = topImage
-
-        // - Create UIView
-        let contentView = UIView(frame: CGRect(x: 0, y: 0, width: 306, height: 306))
-        contentView.addSubview(imgView)
-        contentView.addSubview(imgView2)
-
-        // - Set Size
-        let size = CGSize(width: 306, height: 306)
-
-        // - Where the magic happens
-        UIGraphicsBeginImageContextWithOptions(size, true, 0)
-
-        contentView.drawHierarchy(in: contentView.bounds, afterScreenUpdates: true)
-
-        guard let i = UIGraphicsGetImageFromCurrentImageContext(),
-            let data = i.jpegData(compressionQuality: 1.0)
-            else {return nil}
-
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
 
-        return data
+        //set finalImage to IBOulet UIImageView
+        mergedImageView.image = newImage
     }
 }
