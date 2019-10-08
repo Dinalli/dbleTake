@@ -142,7 +142,7 @@ class CaptureViewControllerModel: NSObject {
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5),
-            portraitfrontCameraWidthConstraint, portraitfrontCameraHeightConstraint, landscapefrontCameraWidthConstraint, landscapefrontCameraHeightConstraint
+            portraitfrontCameraWidthConstraint, portraitfrontCameraHeightConstraint
         ]
 
         backCameraConstraints = [
@@ -152,9 +152,8 @@ class CaptureViewControllerModel: NSObject {
             NSLayoutConstraint(item: frontCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: backCameraPreview as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5),
-            portraitBackCameraWidthConstraint, portraitBackCameraHeightConstraint, landscapeBackCameraWidthConstraint, landscapeBackCameraHeightConstraint
+            portraitBackCameraWidthConstraint, portraitBackCameraHeightConstraint
         ]
-
         NSLayoutConstraint.activate(frontCameraConstraints)
         if !isMultiCam { frontCameraPreview.isHidden = true }
     }

@@ -72,11 +72,29 @@
                         <outlet property="backCameraPreview" destination="PjH-UV-n43" id="r6Y-hh-Vzp"/>
                         <outlet property="flashButton" destination="aMd-IE-6v8" id="DGN-Xn-QIN"/>
                         <outlet property="frontCameraPreview" destination="Vc2-st-OZ4" id="ux5-cp-5Bd"/>
+                        <segue destination="tMm-3K-lEQ" kind="show" identifier="showMergedSegue" id="Elz-Y7-v8i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="126" y="124"/>
+        </scene>
+        <!--Merged View Controller-->
+        <scene sceneID="rJi-Nv-r5u">
+            <objects>
+                <viewController id="tMm-3K-lEQ" customClass="MergedViewController" customModule="dbleTake" customModuleProvider="target" sceneMemberID="viewController">
+                    <imageView key="view" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Zfc-hI-Zkj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <navigationItem key="navigationItem" id="u75-P3-QVP"/>
+                    <connections>
+                        <outlet property="mergedImageView" destination="Zfc-hI-Zkj" id="EhS-jQ-gdL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SMe-Sn-JG0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="993" y="124"/>
         </scene>
     </scenes>
     <resources>
