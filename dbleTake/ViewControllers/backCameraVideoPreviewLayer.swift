@@ -14,7 +14,6 @@ import Vision
 class CaptureViewController: UIViewController  {
 
     let faceDetectionHelper = FaceDetectionHelper()
-    let filterHelper = FilterHelper()
 
     var frontImage: UIImage!
     var backImage: UIImage!
