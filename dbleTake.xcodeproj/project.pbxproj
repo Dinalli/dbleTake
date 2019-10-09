@@ -17,10 +17,12 @@
 		4025F367234B87D5008E6D38 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4025F366234B87D5008E6D38 /* Extension.swift */; };
 		4025F369234B88F2008E6D38 /* MergedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4025F368234B88F2008E6D38 /* MergedViewController.swift */; };
 		403ADA74234A5DDD004F1295 /* TimerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403ADA73234A5DDD004F1295 /* TimerButtons.swift */; };
-		406DD359232B91D800392121 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD358232B91D800392121 /* CaptureViewController.swift */; };
+		406DD359232B91D800392121 /* backCameraVideoPreviewLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD358232B91D800392121 /* backCameraVideoPreviewLayer.swift */; };
 		406DD35C232B91FB00392121 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD35B232B91FB00392121 /* PreviewView.swift */; };
 		407F43B923473F7400FD0F4B /* ToastButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407F43B823473F7400FD0F4B /* ToastButtonBar.swift */; };
 		40BE5DCA232BC0F60070B740 /* CaptureViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE5DC9232BC0F60070B740 /* CaptureViewControllerModel.swift */; };
+		40BF3F90234DD27B00423381 /* FilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF3F8F234DD27B00423381 /* FilterHelper.swift */; };
+		40BF3F92234DD33F00423381 /* FaceDetectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF3F91234DD33F00423381 /* FaceDetectionHelper.swift */; };
 		9B46F5F4A6A43F36910FD706 /* Pods_dbleTake.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20ECEC925D768D3599E63139 /* Pods_dbleTake.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,10 +40,12 @@
 		4025F366234B87D5008E6D38 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4025F368234B88F2008E6D38 /* MergedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergedViewController.swift; sourceTree = "<group>"; };
 		403ADA73234A5DDD004F1295 /* TimerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerButtons.swift; sourceTree = "<group>"; };
-		406DD358232B91D800392121 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		406DD358232B91D800392121 /* backCameraVideoPreviewLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = backCameraVideoPreviewLayer.swift; sourceTree = "<group>"; };
 		406DD35B232B91FB00392121 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		407F43B823473F7400FD0F4B /* ToastButtonBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastButtonBar.swift; sourceTree = "<group>"; };
 		40BE5DC9232BC0F60070B740 /* CaptureViewControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewControllerModel.swift; sourceTree = "<group>"; };
+		40BF3F8F234DD27B00423381 /* FilterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHelper.swift; sourceTree = "<group>"; };
+		40BF3F91234DD33F00423381 /* FaceDetectionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionHelper.swift; sourceTree = "<group>"; };
 		56C9592A8E8665FDA32300B0 /* Pods-dbleTake.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dbleTake.release.xcconfig"; path = "Target Support Files/Pods-dbleTake/Pods-dbleTake.release.xcconfig"; sourceTree = "<group>"; };
 		97728ADEA91311D519AB35A1 /* Pods-dbleTake.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dbleTake.debug.xcconfig"; path = "Target Support Files/Pods-dbleTake/Pods-dbleTake.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,7 +102,7 @@
 		40215C4D232B85F8001A90B1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				406DD358232B91D800392121 /* CaptureViewController.swift */,
+				406DD358232B91D800392121 /* backCameraVideoPreviewLayer.swift */,
 				4025F368234B88F2008E6D38 /* MergedViewController.swift */,
 			);
 			path = ViewControllers;
@@ -116,6 +120,8 @@
 		40215C4F232B8607001A90B1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				40BF3F8F234DD27B00423381 /* FilterHelper.swift */,
+				40BF3F91234DD33F00423381 /* FaceDetectionHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -279,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40BF3F92234DD33F00423381 /* FaceDetectionHelper.swift in Sources */,
 				40215C41232B85ED001A90B1 /* dbleTake.xcdatamodeld in Sources */,
 				4025F369234B88F2008E6D38 /* MergedViewController.swift in Sources */,
 				40215C53232B911F001A90B1 /* ShutterButton.swift in Sources */,
@@ -288,8 +295,9 @@
 				4025F367234B87D5008E6D38 /* Extension.swift in Sources */,
 				40BE5DCA232BC0F60070B740 /* CaptureViewControllerModel.swift in Sources */,
 				40215C39232B85ED001A90B1 /* SceneDelegate.swift in Sources */,
-				406DD359232B91D800392121 /* CaptureViewController.swift in Sources */,
+				406DD359232B91D800392121 /* backCameraVideoPreviewLayer.swift in Sources */,
 				406DD35C232B91FB00392121 /* PreviewView.swift in Sources */,
+				40BF3F90234DD27B00423381 /* FilterHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
