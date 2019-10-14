@@ -16,8 +16,10 @@
 		40215C53232B911F001A90B1 /* ShutterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40215C52232B911F001A90B1 /* ShutterButton.swift */; };
 		4025F367234B87D5008E6D38 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4025F366234B87D5008E6D38 /* Extension.swift */; };
 		4025F369234B88F2008E6D38 /* MergedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4025F368234B88F2008E6D38 /* MergedViewController.swift */; };
+		40359D0D23508AF600F5564B /* HorizontalNumberScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40359D0C23508AF600F5564B /* HorizontalNumberScrollView.swift */; };
 		403ADA74234A5DDD004F1295 /* TimerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403ADA73234A5DDD004F1295 /* TimerButtons.swift */; };
-		406DD359232B91D800392121 /* backCameraVideoPreviewLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD358232B91D800392121 /* backCameraVideoPreviewLayer.swift */; };
+		406D29EB2351E73C006828EC /* CircularTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406D29EA2351E73C006828EC /* CircularTrackingView.swift */; };
+		406DD359232B91D800392121 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD358232B91D800392121 /* CaptureViewController.swift */; };
 		406DD35C232B91FB00392121 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD35B232B91FB00392121 /* PreviewView.swift */; };
 		407F43B923473F7400FD0F4B /* ToastButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407F43B823473F7400FD0F4B /* ToastButtonBar.swift */; };
 		40BE5DCA232BC0F60070B740 /* CaptureViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE5DC9232BC0F60070B740 /* CaptureViewControllerModel.swift */; };
@@ -39,8 +41,10 @@
 		40215C52232B911F001A90B1 /* ShutterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShutterButton.swift; sourceTree = "<group>"; };
 		4025F366234B87D5008E6D38 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4025F368234B88F2008E6D38 /* MergedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergedViewController.swift; sourceTree = "<group>"; };
+		40359D0C23508AF600F5564B /* HorizontalNumberScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalNumberScrollView.swift; sourceTree = "<group>"; };
 		403ADA73234A5DDD004F1295 /* TimerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerButtons.swift; sourceTree = "<group>"; };
-		406DD358232B91D800392121 /* backCameraVideoPreviewLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = backCameraVideoPreviewLayer.swift; sourceTree = "<group>"; };
+		406D29EA2351E73C006828EC /* CircularTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTrackingView.swift; sourceTree = "<group>"; };
+		406DD358232B91D800392121 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		406DD35B232B91FB00392121 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		407F43B823473F7400FD0F4B /* ToastButtonBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastButtonBar.swift; sourceTree = "<group>"; };
 		40BE5DC9232BC0F60070B740 /* CaptureViewControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewControllerModel.swift; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 		40215C35232B85ED001A90B1 /* dbleTake */ = {
 			isa = PBXGroup;
 			children = (
+				4057CE2F235474C3009742C3 /* CustomUIViews */,
 				4025F365234B87BC008E6D38 /* Extension */,
 				406DD35A232B91EF00392121 /* AppleCode */,
 				40215C51232B87D4001A90B1 /* DataModel */,
@@ -102,7 +107,7 @@
 		40215C4D232B85F8001A90B1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				406DD358232B91D800392121 /* backCameraVideoPreviewLayer.swift */,
+				406DD358232B91D800392121 /* CaptureViewController.swift */,
 				4025F368234B88F2008E6D38 /* MergedViewController.swift */,
 			);
 			path = ViewControllers;
@@ -132,6 +137,8 @@
 				40215C52232B911F001A90B1 /* ShutterButton.swift */,
 				407F43B823473F7400FD0F4B /* ToastButtonBar.swift */,
 				403ADA73234A5DDD004F1295 /* TimerButtons.swift */,
+				40359D0C23508AF600F5564B /* HorizontalNumberScrollView.swift */,
+				406D29EA2351E73C006828EC /* CircularTrackingView.swift */,
 			);
 			path = CustomClasses;
 			sourceTree = "<group>";
@@ -150,6 +157,13 @@
 				4025F366234B87D5008E6D38 /* Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		4057CE2F235474C3009742C3 /* CustomUIViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CustomUIViews;
 			sourceTree = "<group>";
 		};
 		406DD35A232B91EF00392121 /* AppleCode */ = {
@@ -290,12 +304,14 @@
 				4025F369234B88F2008E6D38 /* MergedViewController.swift in Sources */,
 				40215C53232B911F001A90B1 /* ShutterButton.swift in Sources */,
 				40215C37232B85ED001A90B1 /* AppDelegate.swift in Sources */,
+				406D29EB2351E73C006828EC /* CircularTrackingView.swift in Sources */,
 				407F43B923473F7400FD0F4B /* ToastButtonBar.swift in Sources */,
 				403ADA74234A5DDD004F1295 /* TimerButtons.swift in Sources */,
 				4025F367234B87D5008E6D38 /* Extension.swift in Sources */,
 				40BE5DCA232BC0F60070B740 /* CaptureViewControllerModel.swift in Sources */,
 				40215C39232B85ED001A90B1 /* SceneDelegate.swift in Sources */,
-				406DD359232B91D800392121 /* backCameraVideoPreviewLayer.swift in Sources */,
+				40359D0D23508AF600F5564B /* HorizontalNumberScrollView.swift in Sources */,
+				406DD359232B91D800392121 /* CaptureViewController.swift in Sources */,
 				406DD35C232B91FB00392121 /* PreviewView.swift in Sources */,
 				40BF3F90234DD27B00423381 /* FilterHelper.swift in Sources */,
 			);

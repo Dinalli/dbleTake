@@ -18,6 +18,8 @@ class MergedViewController: UIViewController {
     @IBOutlet weak var imageViewFront: UIImageView!
     @IBOutlet weak var imageViewBack: UIImageView!
     @IBOutlet weak var filteredImageScrollView: UIScrollView!
+    @IBOutlet weak var horizontalScroll: HorizontalNumberScrollView!
+    @IBOutlet weak var circleTracker: CircularTrackingView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,17 +49,42 @@ class MergedViewController: UIViewController {
         showFilteredImages(image: thumbImage)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setUpCircleView()
+        setUpHorizontalView()
+    }
+
     func showFilteredImages(image: UIImage) {
         var currentX: Int = 5
         guard let originalCIImage = CIImage(image: image) else { return }
-        let filters = ["CISepiaTone","CIColorMap","CIColorMonochrome","CIColorPosterize","CIPhotoEffectInstant","CIPhotoEffectFade","CIPhotoEffectChrome","CIPhotoEffectMono","CIPhotoEffectNoir","CIPhotoEffectTonal","CIPhotoEffectTransfer","CICircularScreen","CIDotScreen"]
+        let filtersDict = ["CISepiaTone":"Sepia","CIColorMap":"ColorMap","CIColorMonochrome":"Monochrome","CIColorPosterize":"Posterize","CIPhotoEffectInstant":"Instant","CIPhotoEffectFade":"Fade","CIPhotoEffectChrome":"Chrome","CIPhotoEffectMono":"Mono","CIPhotoEffectNoir":"Noir","CIPhotoEffectTonal":"Tonal","CIPhotoEffectTransfer":"Transfer","CICircularScreen":"Circle","CIDotScreen":"Dot"]
+        let filters = filtersDict.keys
         for filter in filters {
             let filteredImage = filterHelper.applyFilter(image: originalCIImage, filterName: filter)
-            let imageView = UIImageView(frame: CGRect(x: currentX, y: 5, width: 90, height: 100))
+            let imageView = UIImageView(frame: CGRect(x: currentX, y: 15, width: 90, height: 100))
             imageView.image = filteredImage
             filteredImageScrollView.addSubview(imageView)
+
+            let filterName = filtersDict[filter]
+            let label = UILabel(frame: CGRect(x: currentX, y: 0, width: 90, height: 15))
+            label.text = filterName
+            label.textAlignment = .center
+            label.textColor = .white
+            filteredImageScrollView.addSubview(label)
             currentX += 105
         }
         filteredImageScrollView.contentSize = CGSize(width: currentX, height: 100)
+    }
+
+    func setUpCircleView() {
+        circleTracker.percent = 65
+        circleTracker.numberToShow = 65
+        circleTracker.drawOverlayCircle()
+    }
+
+    func setUpHorizontalView() {
+        horizontalScroll.backColor = .clear
+        horizontalScroll.numberColor = UIColor.cyan
     }
 }

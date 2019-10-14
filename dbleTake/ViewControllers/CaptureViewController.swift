@@ -500,15 +500,15 @@ extension CaptureViewController: AVCapturePhotoCaptureDelegate {
 
         PHPhotoLibrary.requestAuthorization { status in
             if status == .authorized {
-                PHPhotoLibrary.shared().performChanges({
-                    let options = PHAssetResourceCreationOptions()
-                    let creationRequest = PHAssetCreationRequest.forAsset()
-                    creationRequest.addResource(with: .photo, data: photoData, options: options)
-                }, completionHandler: { _, error in
-                    if let error = error {
-                        print("Error occurred while saving photo to photo library: \(error)")
-                    }
-                })
+//                PHPhotoLibrary.shared().performChanges({
+//                    let options = PHAssetResourceCreationOptions()
+//                    let creationRequest = PHAssetCreationRequest.forAsset()
+//                    creationRequest.addResource(with: .photo, data: photoData, options: options)
+//                }, completionHandler: { _, error in
+//                    if let error = error {
+//                        print("Error occurred while saving photo to photo library: \(error)")
+//                    }
+//                })
             }
         }
 
@@ -606,9 +606,7 @@ extension CaptureViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 
         // Perform landmark detection on tracked faces.
         for trackingRequest in newTrackingRequests {
-
             let faceLandmarksRequest = VNDetectFaceLandmarksRequest(completionHandler: { (request, error) in
-
                 if error != nil {
                     print("FaceLandmarks error: \(String(describing: error)).")
                 }
@@ -617,7 +615,7 @@ extension CaptureViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
                     let results = landmarksRequest.results as? [VNFaceObservation] else {
                         return
                 }
-
+                
                 // Perform all UI updates (drawing) on the main queue, not the background queue on which this handler is being called.
                 DispatchQueue.main.async {
                     self.faceDetectionHelper.drawFaceObservations(results)

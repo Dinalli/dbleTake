@@ -63,7 +63,7 @@ class FaceDetectionHelper: NSObject {
         faceLandmarksShapeLayer.anchorPoint = normalizedCenterPoint
         faceLandmarksShapeLayer.position = captureDeviceBoundsCenterPoint
         faceLandmarksShapeLayer.fillColor = nil
-        faceLandmarksShapeLayer.strokeColor = UIColor.red.withAlphaComponent(0.7).cgColor
+        faceLandmarksShapeLayer.strokeColor = UIColor.green.withAlphaComponent(0.7).cgColor
         faceLandmarksShapeLayer.lineWidth = 3
         faceLandmarksShapeLayer.shadowOpacity = 0.7
         faceLandmarksShapeLayer.shadowRadius = 5
@@ -241,16 +241,19 @@ class FaceDetectionHelper: NSObject {
 
         switch deviceOrientation {
         case .portraitUpsideDown:
-            return .rightMirrored
+            return .left
 
         case .landscapeLeft:
-            return .downMirrored
+            return .up
 
         case .landscapeRight:
-            return .upMirrored
+            return .down
+
+        case .portrait:
+            return .right
 
         default:
-            return .leftMirrored
+            return .right
         }
     }
 
