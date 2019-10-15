@@ -127,7 +127,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tTe-7A-2nu"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Lc7-Kt-77j"/>
+                    <navigationItem key="navigationItem" id="Lc7-Kt-77j">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.arrow.down" catalog="system" id="Mj6-6J-hPF">
+                            <color key="tintColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="saveFilteredImage:" destination="6xK-g3-rqh" id="0Rj-DC-6xJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="filterView" destination="ThF-QU-5y8" id="7fO-th-hqc"/>
                         <outlet property="filteredImageScrollView" destination="l3N-XO-Uli" id="16B-aK-PM0"/>
@@ -153,6 +160,7 @@
     <resources>
         <image name="856-lightning-bolt" width="14" height="28"/>
         <image name="camera" width="30" height="30"/>
+        <image name="square.and.arrow.down" catalog="system" width="58" height="64"/>
         <image name="timer" width="30" height="30"/>
     </resources>
 </document>

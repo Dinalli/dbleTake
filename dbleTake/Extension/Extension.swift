@@ -48,3 +48,35 @@ extension UIImage {
         return data
     }
 }
+
+extension UIViewController {
+    /// Shows a toast message to the user with a custom duration
+    func showUserToastMessage(message: String, duration: TimeInterval) {
+        DispatchQueue.main.async {
+            let toastLabel = UILabel()
+            toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            toastLabel.textColor = UIColor.white
+            toastLabel.textAlignment = .center
+            toastLabel.font = UIFont(name: "Roboto", size: 18.0)
+            toastLabel.text = message
+            toastLabel.alpha = 1.0
+            toastLabel.layer.cornerRadius = 10
+            toastLabel.clipsToBounds  =  true
+            var toastHeight = toastLabel.intrinsicContentSize.height
+            var toastWidth = toastLabel.intrinsicContentSize.width + 20
+            if toastWidth > self.view.frame.width {
+                toastHeight *= 2
+                toastWidth = self.view.frame.width-20
+                toastLabel.numberOfLines = 0
+            }
+            toastLabel.frame = CGRect(x: 0, y: self.view.frame.height - 240, width: toastWidth, height: toastHeight + 20)
+            toastLabel.center.x = self.view.center.x
+            self.view.addSubview(toastLabel)
+            UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseOut, animations: {
+                toastLabel.alpha = 0.0
+            }, completion: {(_ ) in
+                toastLabel.removeFromSuperview()
+            })
+        }
+    }
+}

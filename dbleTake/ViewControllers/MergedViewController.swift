@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class MergedViewController: UIViewController {
 
@@ -43,15 +44,7 @@ class MergedViewController: UIViewController {
         imageViewFront.contentMode = .scaleAspectFill
         imageViewBack.contentMode = .scaleAspectFill
 
-        let size = CGSize(width: frontImage!.size.width + backImage!.size.width , height: frontImage!.size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-
-        frontImage!.draw(in: CGRect(x: 0, y: 0, width: frontImage!.size.width, height: size.height))
-        backImage!.draw(in: CGRect(x: frontImage!.size.width, y: 0, width: backImage!.size.width, height: size.height))
-
-        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-
+        let newImage = mergeFrontAndBackImages()
         var thumbImage : UIImage
         let thumbSize = CGSize(width: 90, height: 100)
         UIGraphicsBeginImageContext(thumbSize)
@@ -125,7 +118,36 @@ class MergedViewController: UIViewController {
         currentSelectedImage = .back
         filterImage = self.backImage
     }
-    
+
+    @IBAction func saveFilteredImage(_ sender: UIBarButtonItem) {
+        //let imageToSave =
+        PHPhotoLibrary.requestAuthorization { status in
+            if status == .authorized {
+                PHPhotoLibrary.shared().performChanges({
+                    let mergedImage = self.mergeFrontAndBackImages()
+                    guard let photoData = mergedImage.jpegData(compressionQuality: 1) else { return }
+                    let options = PHAssetResourceCreationOptions()
+                    let creationRequest = PHAssetCreationRequest.forAsset()
+                    creationRequest.addResource(with: .photo, data: photoData, options: options)
+                }, completionHandler: { _, error in
+                    if let error = error {
+                        print("Error occurred while saving photo to photo library: \(error)")
+                    }
+                    self.showUserToastMessage(message: "Image Saved to Camera Roll", duration: 1.5)
+                })
+            }
+        }
+    }
+
+    func mergeFrontAndBackImages() -> UIImage {
+        let size = CGSize(width: frontImage!.size.width + backImage!.size.width , height: frontImage!.size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        frontImage!.draw(in: CGRect(x: 0, y: 0, width: frontImage!.size.width, height: size.height))
+        backImage!.draw(in: CGRect(x: frontImage!.size.width, y: 0, width: backImage!.size.width, height: size.height))
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+    }
 }
 
 extension MergedViewController: FilterDelegate {
