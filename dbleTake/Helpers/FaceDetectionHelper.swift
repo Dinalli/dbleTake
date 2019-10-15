@@ -238,7 +238,6 @@ class FaceDetectionHelper: NSObject {
     }
 
     func exifOrientationForDeviceOrientation(_ deviceOrientation: UIDeviceOrientation) -> CGImagePropertyOrientation {
-
         switch deviceOrientation {
         case .portraitUpsideDown:
             return .left

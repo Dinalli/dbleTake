@@ -10,22 +10,35 @@ import UIKit
 
 class MergedViewController: UIViewController {
 
-    let filterHelper = FilterHelper()
+    enum SelectedImage {
+        case front
+        case back
+    }
 
+    var currentSelectedImage: SelectedImage = .front
+    let filterHelper = FilterHelper()
     var frontImage: UIImage!
     var backImage: UIImage!
+    var filterImage: UIImage!
 
     @IBOutlet weak var imageViewFront: UIImageView!
     @IBOutlet weak var imageViewBack: UIImageView!
     @IBOutlet weak var filteredImageScrollView: UIScrollView!
-    @IBOutlet weak var horizontalScroll: HorizontalNumberScrollView!
-    @IBOutlet weak var circleTracker: CircularTrackingView!
+    @IBOutlet weak var filterView: UIView!
+
+    fileprivate var currentFilter: String = "Sepia"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         imageViewBack.image = backImage
         imageViewFront.image = frontImage
+        filterImage = frontImage
+        
+        imageViewFront.layer.borderColor = UIColor.red.cgColor
+        imageViewFront.layer.borderWidth = 1.0
+        imageViewBack.layer.borderColor = UIColor.clear.cgColor
+        imageViewBack.layer.borderWidth = 0.0
 
         imageViewFront.contentMode = .scaleAspectFill
         imageViewBack.contentMode = .scaleAspectFill
@@ -51,8 +64,7 @@ class MergedViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setUpCircleView()
-        setUpHorizontalView()
+        setUpFilterView()
     }
 
     func showFilteredImages(image: UIImage) {
@@ -77,14 +89,53 @@ class MergedViewController: UIViewController {
         filteredImageScrollView.contentSize = CGSize(width: currentX, height: 100)
     }
 
-    func setUpCircleView() {
-        circleTracker.percent = 65
-        circleTracker.numberToShow = 65
-        circleTracker.drawOverlayCircle()
+    func setUpFilterView() {
+        switch currentFilter {
+        case "none":
+            break
+        case "Sepia":
+            setUpSepiaFilter()
+        default:
+            setUpSepiaFilter()
+        }
     }
 
-    func setUpHorizontalView() {
-        horizontalScroll.backColor = .clear
-        horizontalScroll.numberColor = UIColor.cyan
+    func setUpSepiaFilter() {
+        let sepiaView = SepiaFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
+        sepiaView.originalImage = filterImage
+        sepiaView.delegate = self
+        sepiaView.intensity = 1.0
+        sepiaView.setUpFilter()
+        self.filterView.addSubview(sepiaView)
+    }
+
+    @IBAction func frontImageTapped(_ sender: UITapGestureRecognizer) {
+        imageViewFront.layer.borderColor = UIColor.red.cgColor
+        imageViewFront.layer.borderWidth = 1.0
+        imageViewBack.layer.borderColor = UIColor.clear.cgColor
+        imageViewBack.layer.borderWidth = 0.0
+        currentSelectedImage = .front
+        filterImage = self.frontImage
+    }
+    @IBAction func backImageTapped(_ sender: UITapGestureRecognizer) {
+        imageViewFront.layer.borderColor = UIColor.clear.cgColor
+        imageViewFront.layer.borderWidth = 0.0
+        imageViewBack.layer.borderColor = UIColor.red.cgColor
+        imageViewBack.layer.borderWidth = 1.0
+        currentSelectedImage = .back
+        filterImage = self.backImage
+    }
+    
+}
+
+extension MergedViewController: FilterDelegate {
+    func updateImage(image: UIImage) {
+        DispatchQueue.main.async {
+            if self.currentSelectedImage == .front {
+                self.imageViewFront.image = image
+            } else if self.currentSelectedImage == .back {
+                self.imageViewBack.image = image
+            }
+        }
     }
 }
