@@ -111,7 +111,7 @@ extension HorizontalNumberScrollView: UIScrollViewDelegate {
 
 
         let value = lroundf(Float(scrollView.contentOffset.x / CGFloat(endValue))) //* 50
-print(value)
+
 //        let viewIndex:Int = Int((scrollView.contentOffset.x/50))
 //        let labelView = scrollViewLabels[viewIndex]
 //        guard let valueString = labelView.text else { return }

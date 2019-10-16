@@ -24,6 +24,7 @@
 		406DD359232B91D800392121 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD358232B91D800392121 /* CaptureViewController.swift */; };
 		406DD35C232B91FB00392121 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DD35B232B91FB00392121 /* PreviewView.swift */; };
 		407F43B923473F7400FD0F4B /* ToastButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407F43B823473F7400FD0F4B /* ToastButtonBar.swift */; };
+		40BA54D423570D6700EFDE79 /* FilterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA54D323570D6700EFDE79 /* FilterImageView.swift */; };
 		40BE5DCA232BC0F60070B740 /* CaptureViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE5DC9232BC0F60070B740 /* CaptureViewControllerModel.swift */; };
 		40BF3F90234DD27B00423381 /* FilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF3F8F234DD27B00423381 /* FilterHelper.swift */; };
 		40BF3F92234DD33F00423381 /* FaceDetectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF3F91234DD33F00423381 /* FaceDetectionHelper.swift */; };
@@ -52,6 +53,7 @@
 		406DD358232B91D800392121 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		406DD35B232B91FB00392121 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		407F43B823473F7400FD0F4B /* ToastButtonBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastButtonBar.swift; sourceTree = "<group>"; };
+		40BA54D323570D6700EFDE79 /* FilterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterImageView.swift; sourceTree = "<group>"; };
 		40BE5DC9232BC0F60070B740 /* CaptureViewControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewControllerModel.swift; sourceTree = "<group>"; };
 		40BF3F8F234DD27B00423381 /* FilterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHelper.swift; sourceTree = "<group>"; };
 		40BF3F91234DD33F00423381 /* FaceDetectionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionHelper.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				40359D0C23508AF600F5564B /* HorizontalNumberScrollView.swift */,
 				406D29EA2351E73C006828EC /* CircularTrackingView.swift */,
 				40E76E312355B542003D231A /* PointerView.swift */,
+				40BA54D323570D6700EFDE79 /* FilterImageView.swift */,
 			);
 			path = CustomClasses;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40BA54D423570D6700EFDE79 /* FilterImageView.swift in Sources */,
 				40BF3F92234DD33F00423381 /* FaceDetectionHelper.swift in Sources */,
 				40215C41232B85ED001A90B1 /* dbleTake.xcdatamodeld in Sources */,
 				4025F369234B88F2008E6D38 /* MergedViewController.swift in Sources */,

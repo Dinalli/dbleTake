@@ -17,7 +17,6 @@ class SepiaFilterView: FilterBaseView {
 
     override func configure() {
         super.configure()
-
         horizontalSCroll = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 5, width: self.frame.width, height: 100))
         horizontalSCroll.title = "Intensity"
         horizontalSCroll.startValue = 0
@@ -37,7 +36,8 @@ class SepiaFilterView: FilterBaseView {
 extension SepiaFilterView: HorizontalScrollDelegate {
     func valueChanged(value: CGFloat) {
         let intensityValue = value/100
-        let filteredImage = filterHelper.applySepiaFilter(image: self.originalCIImage, originalImage: originalImage, intensity: intensityValue)
+        print("Intensity \(intensityValue)")
+        let filteredImage = filterHelper.applySepiaFilter(image: self.originalCIImage, intensity: intensityValue)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }

@@ -21,11 +21,11 @@ class FilterHelper: NSObject {
         return UIImage(ciImage: returnCIImage)
     }
 
-    func applySepiaFilter(image: CIImage, originalImage: UIImage, intensity: CGFloat) -> UIImage {
+    func applySepiaFilter(image: CIImage, intensity: CGFloat) -> UIImage {
         let filter = CIFilter(name: "CISepiaTone")
         filter?.setValue(image, forKey: kCIInputImageKey)
         filter?.setValue(intensity, forKey: kCIInputIntensityKey)
         guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
-        return UIImage(ciImage:returnCIImage, scale: originalImage.scale, orientation: originalImage.imageOrientation)
+        return UIImage(ciImage: returnCIImage)
     }
 }

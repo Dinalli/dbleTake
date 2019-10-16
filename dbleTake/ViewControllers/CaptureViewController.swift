@@ -477,9 +477,7 @@ class CaptureViewController: UIViewController  {
 
         // Start with detection.  Find face, then track it.
         self.detectionRequests = [faceDetectionRequest]
-
         self.sequenceRequestHandler = VNSequenceRequestHandler()
-
         faceDetectionHelper.rootLayer = self.backCameraPreview.layer
         faceDetectionHelper.previewLayer = backCameraVideoPreviewLayer
         faceDetectionHelper.setupVisionDrawingLayers()
