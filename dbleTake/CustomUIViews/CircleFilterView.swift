@@ -11,7 +11,10 @@ import UIKit
 class CircleFilterView: FilterBaseView {
     let filterHelper = FilterHelper()
 
-    var inputLevel: CGFloat = 1.0
+    var inputWidth: CGFloat = 1.0
+    var inputCenter: CIVector = CIVector(x: 150.0, y: 150.0)
+    var inputSharpness: CGFloat = 1.0
+
     var horizontalSCroll: HorizontalNumberScrollView!
     
     override func configure() {
@@ -34,8 +37,10 @@ class CircleFilterView: FilterBaseView {
 
 extension CircleFilterView: HorizontalScrollDelegate {
     func valueChanged(value: CGFloat) {
-        let inputLevel = value
-        let filteredImage = filterHelper.applyPosterizeFilter(image: self.originalCIImage, inputLevel: inputLevel)
+        let filteredImage = filterHelper.applyCircleFilter(image: originalCIImage,
+                                                           inputWidth: inputWidth,
+                                                           center: inputCenter,
+                                                           sharpness: inputSharpness)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }

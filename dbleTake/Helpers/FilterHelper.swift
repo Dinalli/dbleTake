@@ -37,10 +37,49 @@ class FilterHelper: NSObject {
         return UIImage(ciImage: returnCIImage)
     }
 
-    func applyCircleFilter(image: CIImage, inputLevel: CGFloat) -> UIImage {
-        let filter = CIFilter(name: "CICIColorPosterize")
+    func applyCircleFilter(image: CIImage, inputWidth: CGFloat, center: CIVector, sharpness: CGFloat) -> UIImage {
+        let filter = CIFilter(name: "CICircularScreen")
         filter?.setValue(image, forKey: kCIInputImageKey)
-        filter?.setValue(inputLevel, forKey: kCIInputScaleKey)
+        filter?.setValue(inputWidth, forKey: kCIInputWidthKey)
+        filter?.setValue(center, forKey: kCIInputCenterKey)
+        filter?.setValue(sharpness, forKey: kCIInputSharpnessKey)
+        guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
+        return UIImage(ciImage: returnCIImage)
+    }
+
+    func applyDotFilter(image: CIImage, inputWidth: CGFloat, center: CIVector, angle: CGFloat, sharpness: CGFloat) -> UIImage {
+        let filter = CIFilter(name: "CIDotScreen")
+        filter?.setValue(image, forKey: kCIInputImageKey)
+        filter?.setValue(inputWidth, forKey: kCIInputWidthKey)
+        filter?.setValue(center, forKey: kCIInputCenterKey)
+        filter?.setValue(angle, forKey: kCIInputAngleKey)
+        filter?.setValue(sharpness, forKey: kCIInputSharpnessKey)
+        guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
+        return UIImage(ciImage: returnCIImage)
+    }
+
+    func applyBlurFilter(image: CIImage, radius: CGFloat) -> UIImage {
+        let filter = CIFilter(name: "CIDiscBlur")
+        filter?.setValue(image, forKey: kCIInputImageKey)
+        filter?.setValue(radius, forKey: kCIInputRadiusKey)
+        guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
+        return UIImage(ciImage: returnCIImage)
+    }
+
+    func applyPixelFilter(image: CIImage, inputScale: CGFloat, center: CIVector) -> UIImage {
+        let filter = CIFilter(name: "CIPixellate")
+        filter?.setValue(image, forKey: kCIInputImageKey)
+        filter?.setValue(inputScale, forKey: kCIInputScaleKey)
+        filter?.setValue(center, forKey: kCIInputCenterKey)
+        guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
+        return UIImage(ciImage: returnCIImage)
+    }
+
+    func applyMonochromeFilter(image: CIImage, inputColor: CIColor, inputIntensity: CGFloat) -> UIImage {
+        let filter = CIFilter(name: "CIColorMonochrome")
+        filter?.setValue(image, forKey: kCIInputImageKey)
+        filter?.setValue(inputColor, forKey: kCIInputColorKey)
+        filter?.setValue(inputIntensity, forKey: kCIInputIntensityKey)
         guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
         return UIImage(ciImage: returnCIImage)
     }

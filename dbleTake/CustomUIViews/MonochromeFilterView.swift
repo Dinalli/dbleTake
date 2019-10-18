@@ -12,7 +12,8 @@ class MonochromeFilterView: FilterBaseView {
 
     let filterHelper = FilterHelper()
 
-    var inputLevel: CGFloat = 1.0
+    var inputColor: UIColor = .green
+    var inputIntensity: CGFloat = 1.0
     var horizontalSCroll: HorizontalNumberScrollView!
 
     override func configure() {
@@ -35,8 +36,9 @@ class MonochromeFilterView: FilterBaseView {
 
 extension MonochromeFilterView: HorizontalScrollDelegate {
     func valueChanged(value: CGFloat) {
-        let inputLevel = value
-        let filteredImage = filterHelper.applyPosterizeFilter(image: self.originalCIImage, inputLevel: inputLevel)
+        let filteredImage = filterHelper.applyMonochromeFilter(image: self.originalCIImage,
+                                                               inputColor: CIColor(color: inputColor),
+                                                               inputIntensity: inputIntensity)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }

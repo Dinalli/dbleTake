@@ -12,7 +12,7 @@ class BlurFilterView: FilterBaseView {
 
     let filterHelper = FilterHelper()
 
-    var inputLevel: CGFloat = 1.0
+    var inputRadius: CGFloat = 1.0
     var horizontalSCroll: HorizontalNumberScrollView!
 
     override func configure() {
@@ -35,8 +35,7 @@ class BlurFilterView: FilterBaseView {
 
 extension BlurFilterView: HorizontalScrollDelegate {
     func valueChanged(value: CGFloat) {
-        let inputLevel = value
-        let filteredImage = filterHelper.applyPosterizeFilter(image: self.originalCIImage, inputLevel: inputLevel)
+        let filteredImage = filterHelper.applyBlurFilter(image: self.originalCIImage, radius: inputRadius)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }

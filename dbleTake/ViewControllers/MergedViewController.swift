@@ -144,12 +144,11 @@ class MergedViewController: UIViewController {
     }
 
     func setUpMonochromeFilter() {
-        let posterizeView = PosterizeFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        posterizeView.originalImage = imageFromContextImage(image: filterImage)
-        posterizeView.delegate = self
-        posterizeView.inputLevel = 6.0
-        posterizeView.setUpFilter()
-        self.filterView.addSubview(posterizeView)
+        let monochromeView = MonochromeFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
+        monochromeView.originalImage = imageFromContextImage(image: filterImage)
+        monochromeView.delegate = self
+        monochromeView.setUpFilter()
+        self.filterView.addSubview(monochromeView)
     }
 
     func setUpPosterizeFilter() {
@@ -165,7 +164,6 @@ class MergedViewController: UIViewController {
         let circleView = CircleFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
         circleView.originalImage = imageFromContextImage(image: filterImage)
         circleView.delegate = self
-        circleView.inputLevel = 6.0
         circleView.setUpFilter()
         self.filterView.addSubview(circleView)
     }
@@ -174,7 +172,6 @@ class MergedViewController: UIViewController {
         let dotView = DotFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
         dotView.originalImage = imageFromContextImage(image: filterImage)
         dotView.delegate = self
-        dotView.inputLevel = 6.0
         dotView.setUpFilter()
         self.filterView.addSubview(dotView)
     }
@@ -183,7 +180,6 @@ class MergedViewController: UIViewController {
         let blurView = BlurFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
         blurView.originalImage = imageFromContextImage(image: filterImage)
         blurView.delegate = self
-        blurView.inputLevel = 6.0
         blurView.setUpFilter()
         self.filterView.addSubview(blurView)
     }
@@ -192,7 +188,6 @@ class MergedViewController: UIViewController {
         let pixelView = PixelFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
         pixelView.originalImage = imageFromContextImage(image: filterImage)
         pixelView.delegate = self
-        pixelView.inputLevel = 6.0
         pixelView.setUpFilter()
         self.filterView.addSubview(pixelView)
     }

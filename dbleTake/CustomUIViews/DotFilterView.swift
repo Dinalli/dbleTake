@@ -11,7 +11,10 @@ import UIKit
 class DotFilterView: FilterBaseView {
     let filterHelper = FilterHelper()
 
-    var inputLevel: CGFloat = 1.0
+    var inputWidth: CGFloat = 1.0
+    var inputAngle: CGFloat = 1.0
+    var inputCenter: CIVector = CIVector(x: 150.0, y: 150.0)
+    var inputSharpness: CGFloat = 1.0
     var horizontalSCroll: HorizontalNumberScrollView!
 
     override func configure() {
@@ -34,8 +37,11 @@ class DotFilterView: FilterBaseView {
 
 extension DotFilterView: HorizontalScrollDelegate {
     func valueChanged(value: CGFloat) {
-        let inputLevel = value
-        let filteredImage = filterHelper.applyPosterizeFilter(image: self.originalCIImage, inputLevel: inputLevel)
+        let filteredImage = filterHelper.applyDotFilter(image: originalCIImage,
+                                                           inputWidth: inputWidth,
+                                                           center: inputCenter,
+                                                           angle: inputAngle,
+                                                           sharpness: inputSharpness)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }

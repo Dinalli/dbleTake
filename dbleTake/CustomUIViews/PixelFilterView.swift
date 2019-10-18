@@ -10,8 +10,8 @@ import UIKit
 
 class PixelFilterView: FilterBaseView {
     let filterHelper = FilterHelper()
-
-    var inputLevel: CGFloat = 1.0
+    var inputCenter: CIVector = CIVector(x: 150.0, y: 150.0)
+    var inputScale: CGFloat = 1.0
     var horizontalSCroll: HorizontalNumberScrollView!
 
     override func configure() {
@@ -34,8 +34,9 @@ class PixelFilterView: FilterBaseView {
 
 extension PixelFilterView: HorizontalScrollDelegate {
     func valueChanged(value: CGFloat) {
-        let inputLevel = value
-        let filteredImage = filterHelper.applyPosterizeFilter(image: self.originalCIImage, inputLevel: inputLevel)
+        let filteredImage = filterHelper.applyPixelFilter(image: self.originalCIImage,
+                                                          inputScale: inputScale,
+                                                          center: inputCenter)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }
