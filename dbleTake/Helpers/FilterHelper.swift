@@ -28,4 +28,20 @@ class FilterHelper: NSObject {
         guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
         return UIImage(ciImage: returnCIImage)
     }
+
+    func applyPosterizeFilter(image: CIImage, inputLevel: CGFloat) -> UIImage {
+        let filter = CIFilter(name: "CICIColorPosterize")
+        filter?.setValue(image, forKey: kCIInputImageKey)
+        filter?.setValue(inputLevel, forKey: kCIInputScaleKey)
+        guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
+        return UIImage(ciImage: returnCIImage)
+    }
+
+    func applyCircleFilter(image: CIImage, inputLevel: CGFloat) -> UIImage {
+        let filter = CIFilter(name: "CICIColorPosterize")
+        filter?.setValue(image, forKey: kCIInputImageKey)
+        filter?.setValue(inputLevel, forKey: kCIInputScaleKey)
+        guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
+        return UIImage(ciImage: returnCIImage)
+    }
 }

@@ -97,11 +97,11 @@ class MergedViewController: UIViewController {
             case "Invert":
                 applyBaisicFilter(filter: "CIColorInvert")
             case "Monochrome":
-                setUpSepiaFilter()
+                setUpMonochromeFilter()
             case "Instant":
                 applyBaisicFilter(filter: "CIPhotoEffectInstant")
             case "Posterize":
-                setUpSepiaFilter()
+                setUpPosterizeFilter()
             case "Fade":
                 applyBaisicFilter(filter: "CIPhotoEffectFade")
             case "Chrome":
@@ -117,17 +117,17 @@ class MergedViewController: UIViewController {
             case "Transfer":
                 applyBaisicFilter(filter: "CIPhotoEffectTransfer")
             case "Circle":
-                setUpSepiaFilter()
+                setUpCircleFilter()
             case "Dot":
-                setUpSepiaFilter()
+                setUpDotFilter()
             case "Blur":
-                setUpSepiaFilter()
+                setUpBlurFilter()
             case "Comic":
-                setUpSepiaFilter()
+                applyBaisicFilter(filter: "CIComicEffect")
             case "Pixel":
-                setUpSepiaFilter()
+                setUpPixelFilter()
             case "Line":
-                setUpSepiaFilter()
+                applyBaisicFilter(filter: "CILineOverlay")
         default:
             break
         }
@@ -140,6 +140,60 @@ class MergedViewController: UIViewController {
         sepiaView.intensity = 1.0
         sepiaView.setUpFilter()
         self.filterView.addSubview(sepiaView)
+    }
+
+    func setUpMonochromeFilter() {
+        let posterizeView = PosterizeFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
+        posterizeView.originalImage = imageFromContextImage(image: filterImage)
+        posterizeView.delegate = self
+        posterizeView.inputLevel = 6.0
+        posterizeView.setUpFilter()
+        self.filterView.addSubview(posterizeView)
+    }
+
+    func setUpPosterizeFilter() {
+        let posterizeView = PosterizeFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
+        posterizeView.originalImage = imageFromContextImage(image: filterImage)
+        posterizeView.delegate = self
+        posterizeView.inputLevel = 6.0
+        posterizeView.setUpFilter()
+        self.filterView.addSubview(posterizeView)
+    }
+
+    func setUpCircleFilter() {
+        let circleView = CircleFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
+        circleView.originalImage = imageFromContextImage(image: filterImage)
+        circleView.delegate = self
+        circleView.inputLevel = 6.0
+        circleView.setUpFilter()
+        self.filterView.addSubview(circleView)
+    }
+
+    func setUpDotFilter() {
+        let dotView = DotFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
+        dotView.originalImage = imageFromContextImage(image: filterImage)
+        dotView.delegate = self
+        dotView.inputLevel = 6.0
+        dotView.setUpFilter()
+        self.filterView.addSubview(dotView)
+    }
+
+    func setUpBlurFilter() {
+        let blurView = BlurFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
+        blurView.originalImage = imageFromContextImage(image: filterImage)
+        blurView.delegate = self
+        blurView.inputLevel = 6.0
+        blurView.setUpFilter()
+        self.filterView.addSubview(blurView)
+    }
+
+    func setUpPixelFilter() {
+        let pixelView = PixelFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
+        pixelView.originalImage = imageFromContextImage(image: filterImage)
+        pixelView.delegate = self
+        pixelView.inputLevel = 6.0
+        pixelView.setUpFilter()
+        self.filterView.addSubview(pixelView)
     }
 
     func applyBaisicFilter(filter: String) {
