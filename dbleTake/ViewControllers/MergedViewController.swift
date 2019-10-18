@@ -89,6 +89,7 @@ class MergedViewController: UIViewController {
     }
 
     func setUpFilterView(currentFilter: String) {
+        self.filterView.subviews.forEach { $0.removeFromSuperview() }
         switch currentFilter {
             case "none":
                 break

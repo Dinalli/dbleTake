@@ -44,8 +44,7 @@ public protocol HorizontalScrollDelegate: AnyObject {
 
         let titleLabel = UILabel(frame: CGRect(x: 5, y: 0, width: self.frame.width, height: 21))
         titleLabel.textAlignment = .left
-        titleLabel.font = UIFont(name: "HelveticaNeue",
-                            size: 18.0)
+        titleLabel.font = UIFont(name: "HelveticaNeue", size: 18.0)
         titleLabel.text = title
         titleLabel.textColor = numberColor
         self.addSubview(titleLabel)
@@ -54,7 +53,7 @@ public protocol HorizontalScrollDelegate: AnyObject {
         pointerView.center = CGPoint(x: self.center.x-8, y: 2)
         pointerView.fillColor = numberColor
         pointerView.lineColor = numberColor
-        pointerView.backgroundColor = UIColor.white
+        pointerView.backgroundColor = UIColor.clear
         self.addSubview(pointerView)
 
         // LINES
@@ -65,7 +64,6 @@ public protocol HorizontalScrollDelegate: AnyObject {
         for value in stride(from: startValue, to: endValue, by: interval)
         {
             let isInteger = floor(value) == value
-
             let height = (isInteger) ? 20.0 : 10.0
             let oneLine = UIBezierPath()
             oneLine.move(to: CGPoint(x: value*50, y: 0))
@@ -87,7 +85,6 @@ public protocol HorizontalScrollDelegate: AnyObject {
                 contentWidth += 50
             }
         }
-
         scrollView.contentSize = CGSize(width: contentWidth+300, height: Int(self.frame.size.height))
 
         // DESIGN LINES IN LAYER
@@ -108,8 +105,6 @@ public protocol HorizontalScrollDelegate: AnyObject {
 extension HorizontalNumberScrollView: UIScrollViewDelegate {
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-
-
         let value = lroundf(Float(scrollView.contentOffset.x / CGFloat(endValue))) //* 50
 
 //        let viewIndex:Int = Int((scrollView.contentOffset.x/50))

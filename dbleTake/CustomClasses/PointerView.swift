@@ -27,7 +27,7 @@ class PointerView: UIView {
     }
 
     override public func draw(_ rect: CGRect) {
-        backgroundColor = .white
+        backgroundColor = .green
         let center = CGPoint(x: self.bounds.size.width / 2.0, y: self.bounds.size.height / 2.0)
         let alpha = self.radius * 3 / sqrt(3)
         let pointA: CGPoint?
