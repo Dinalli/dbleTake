@@ -108,7 +108,6 @@ class MergedViewController: UIViewController {
     @objc func filterTapped(_ sender: UITapGestureRecognizer) {
         guard let filterImageView = sender.view as? FilterImageView else { return }
         let filterName: String = filterImageView.filterDisplayName
-        print(filterName)
         setUpFilterView(currentFilter: filterName)
     }
 
@@ -187,6 +186,7 @@ class MergedViewController: UIViewController {
     func setUpCircleFilter() {
         let circleView = CircleFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
         circleView.originalImage = imageFromContextImage(image: filterImage)
+        circleView.inputCenter = CIVector(x: filterImage.size.width/2, y: filterImage.size.height/2)
         circleView.delegate = self
         circleView.setUpFilter()
         self.filterView.addSubview(circleView)
@@ -195,6 +195,7 @@ class MergedViewController: UIViewController {
     func setUpDotFilter() {
         let dotView = DotFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
         dotView.originalImage = imageFromContextImage(image: filterImage)
+        dotView.inputCenter = CIVector(x: filterImage.size.width/2, y: filterImage.size.height/2)
         dotView.delegate = self
         dotView.setUpFilter()
         self.filterView.addSubview(dotView)
@@ -217,6 +218,7 @@ class MergedViewController: UIViewController {
     }
 
     func applyBaisicFilter(filter: String) {
+        let filterImage = imageFromContextImage(image: self.filterImage)
         guard let originalCIImage = CIImage(image: filterImage) else { return }
         let filteredImage = filterHelper.applyFilter(image: originalCIImage, filterName: filter)
         if self.currentSelectedImage == .front {

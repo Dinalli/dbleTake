@@ -19,7 +19,7 @@ class MonochromeFilterView: FilterBaseView {
     override func configure() {
         super.configure()
         horizontalSCroll = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 5, width: self.frame.width, height: 100))
-        horizontalSCroll.title = "Input Level"
+        horizontalSCroll.title = "Input Intensity %"
         horizontalSCroll.startValue = 0
         horizontalSCroll.endValue = 100
         horizontalSCroll.interval = 0.1
@@ -27,6 +27,21 @@ class MonochromeFilterView: FilterBaseView {
         horizontalSCroll.delegate = self
         horizontalSCroll.configure()
         self.addSubview(horizontalSCroll)
+
+        let colorPickerView = ColorPickerView(frame: CGRect(x: 0, y: 100, width: self.frame.width, height: 100))
+        colorPickerView.onColorDidChange = { [weak self] color in
+            DispatchQueue.main.async {
+                // use picked color for your needs here...
+                self?.inputColor = color
+                let filteredImage = self!.filterHelper.applyMonochromeFilter(image: self!.originalCIImage,
+                                                                            inputColor: CIColor(color: self!.inputColor),
+                                                                            inputIntensity: self!.inputIntensity)
+                if self!.delegate != nil {
+                    self!.delegate?.updateImage(image: filteredImage)
+                }
+            }
+        }
+        self.addSubview(colorPickerView)
     }
 
     override func setUpFilter() {
@@ -36,6 +51,8 @@ class MonochromeFilterView: FilterBaseView {
 
 extension MonochromeFilterView: HorizontalScrollDelegate {
     func valueChanged(value: CGFloat) {
+        inputIntensity = value / 100
+        print("Input Intensity \(inputIntensity)")
         let filteredImage = filterHelper.applyMonochromeFilter(image: self.originalCIImage,
                                                                inputColor: CIColor(color: inputColor),
                                                                inputIntensity: inputIntensity)

@@ -66,11 +66,10 @@ class FilterHelper: NSObject {
         return UIImage(ciImage: returnCIImage)
     }
 
-    func applyPixelFilter(image: CIImage, inputScale: CGFloat, center: CIVector) -> UIImage {
+    func applyPixelFilter(image: CIImage, inputScale: CGFloat) -> UIImage {
         let filter = CIFilter(name: "CIPixellate")
         filter?.setValue(image, forKey: kCIInputImageKey)
         filter?.setValue(inputScale, forKey: kCIInputScaleKey)
-        filter?.setValue(center, forKey: kCIInputCenterKey)
         guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
         return UIImage(ciImage: returnCIImage)
     }

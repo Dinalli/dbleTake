@@ -15,19 +15,32 @@ class CircleFilterView: FilterBaseView {
     var inputCenter: CIVector = CIVector(x: 150.0, y: 150.0)
     var inputSharpness: CGFloat = 1.0
 
-    var horizontalSCroll: HorizontalNumberScrollView!
+    var horizontalSCrollWidth: HorizontalNumberScrollView!
+    var horizontalSCrollSharpness: HorizontalNumberScrollView!
     
     override func configure() {
         super.configure()
-        horizontalSCroll = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 5, width: self.frame.width, height: 100))
-        horizontalSCroll.title = "Input Level"
-        horizontalSCroll.startValue = 0
-        horizontalSCroll.endValue = 100
-        horizontalSCroll.interval = 0.1
-        horizontalSCroll.numberColor = .white
-        horizontalSCroll.delegate = self
-        horizontalSCroll.configure()
-        self.addSubview(horizontalSCroll)
+        horizontalSCrollWidth = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 5, width: self.frame.width, height: 100))
+        horizontalSCrollWidth.title = "Input Width"
+        horizontalSCrollWidth.startValue = 0
+        horizontalSCrollWidth.endValue = 18
+        horizontalSCrollWidth.interval = 0.1
+        horizontalSCrollWidth.numberColor = .white
+        horizontalSCrollWidth.delegate = self
+        horizontalSCrollWidth.currentValue = 6.0
+        horizontalSCrollWidth.configure()
+        self.addSubview(horizontalSCrollWidth)
+
+        horizontalSCrollSharpness = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 75, width: self.frame.width, height: 100))
+        horizontalSCrollSharpness.title = "Input Sharpness"
+        horizontalSCrollSharpness.startValue = 0
+        horizontalSCrollSharpness.endValue = 1
+        horizontalSCrollSharpness.interval = 0.1
+        horizontalSCrollSharpness.numberColor = .white
+        horizontalSCrollSharpness.currentValue = 0.7
+        horizontalSCrollSharpness.delegate = self
+        horizontalSCrollSharpness.configure()
+        self.addSubview(horizontalSCrollSharpness)
     }
     
     override func setUpFilter() {
@@ -37,6 +50,8 @@ class CircleFilterView: FilterBaseView {
 
 extension CircleFilterView: HorizontalScrollDelegate {
     func valueChanged(value: CGFloat) {
+        inputWidth = horizontalSCrollWidth.currentValue
+        inputSharpness = horizontalSCrollSharpness.currentValue
         let filteredImage = filterHelper.applyCircleFilter(image: originalCIImage,
                                                            inputWidth: inputWidth,
                                                            center: inputCenter,

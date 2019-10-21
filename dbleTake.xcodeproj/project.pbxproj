@@ -18,6 +18,7 @@
 		4025F369234B88F2008E6D38 /* MergedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4025F368234B88F2008E6D38 /* MergedViewController.swift */; };
 		40359D0D23508AF600F5564B /* HorizontalNumberScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40359D0C23508AF600F5564B /* HorizontalNumberScrollView.swift */; };
 		403ADA74234A5DDD004F1295 /* TimerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403ADA73234A5DDD004F1295 /* TimerButtons.swift */; };
+		40435987235DC27B009A83A2 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40435986235DC27B009A83A2 /* ColorPickerView.swift */; };
 		4057CE312354822A009742C3 /* FilterBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057CE302354822A009742C3 /* FilterBaseView.swift */; };
 		4057CE33235484F6009742C3 /* SepiaFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057CE32235484F6009742C3 /* SepiaFilterView.swift */; };
 		406D29EB2351E73C006828EC /* CircularTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406D29EA2351E73C006828EC /* CircularTrackingView.swift */; };
@@ -53,6 +54,7 @@
 		4025F368234B88F2008E6D38 /* MergedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergedViewController.swift; sourceTree = "<group>"; };
 		40359D0C23508AF600F5564B /* HorizontalNumberScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalNumberScrollView.swift; sourceTree = "<group>"; };
 		403ADA73234A5DDD004F1295 /* TimerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerButtons.swift; sourceTree = "<group>"; };
+		40435986235DC27B009A83A2 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		4057CE302354822A009742C3 /* FilterBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBaseView.swift; sourceTree = "<group>"; };
 		4057CE32235484F6009742C3 /* SepiaFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SepiaFilterView.swift; sourceTree = "<group>"; };
 		406D29EA2351E73C006828EC /* CircularTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTrackingView.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				40BA54DB2359B5F100EFDE79 /* MonochromeFilterView.swift */,
 				40BA54DD2359B62000EFDE79 /* BlurFilterView.swift */,
 				40BA54DF2359B64A00EFDE79 /* PixelFilterView.swift */,
+				40435986235DC27B009A83A2 /* ColorPickerView.swift */,
 			);
 			path = CustomUIViews;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				406DD359232B91D800392121 /* CaptureViewController.swift in Sources */,
 				406DD35C232B91FB00392121 /* PreviewView.swift in Sources */,
 				40BA54D62359A75100EFDE79 /* PosterizeFilterView.swift in Sources */,
+				40435987235DC27B009A83A2 /* ColorPickerView.swift in Sources */,
 				40BF3F90234DD27B00423381 /* FilterHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -23,6 +23,7 @@ public protocol HorizontalScrollDelegate: AnyObject {
     var numberColor: UIColor = .black
     var backColor: UIColor = .clear
     var title: String!
+    var currentValue: CGFloat!
     
     fileprivate var scrollViewLabels = [UILabel]()
 
@@ -105,15 +106,15 @@ public protocol HorizontalScrollDelegate: AnyObject {
 extension HorizontalNumberScrollView: UIScrollViewDelegate {
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let value = lroundf(Float(scrollView.contentOffset.x / CGFloat(endValue))) //* 50
+        currentValue = CGFloat(lroundf(Float(scrollView.contentOffset.x / CGFloat(endValue)))) //* 50
 
 //        let viewIndex:Int = Int((scrollView.contentOffset.x/50))
 //        let labelView = scrollViewLabels[viewIndex]
 //        guard let valueString = labelView.text else { return }
 //        let valueDouble = CGFloat(Double(valueString)!)
-
+print(currentValue)
         if delegate != nil {
-            delegate?.valueChanged(value: CGFloat(value))
+            delegate?.valueChanged(value: currentValue)
         }
     }
 }
