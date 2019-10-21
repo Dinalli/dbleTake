@@ -11,6 +11,12 @@ import Photos
 
 class MergedViewController: UIViewController {
 
+    struct Filter {
+        let filterName: String
+        let displayName: String
+        var description: String { return displayName }
+    }
+
     enum SelectedImage {
         case front
         case back
@@ -57,22 +63,40 @@ class MergedViewController: UIViewController {
     func showFilteredImages(image: UIImage) {
         var currentX: Int = 5
         guard let originalCIImage = CIImage(image: image) else { return }
-        let filtersDict = ["CISepiaTone":"Sepia","CIColorInvert":"Invert","CIColorMonochrome":"Monochrome","CIColorPosterize":"Posterize","CIPhotoEffectInstant":"Instant","CIPhotoEffectFade":"Fade","CIPhotoEffectChrome":"Chrome","CIPhotoEffectMono":"Mono","CIPhotoEffectNoir":"Noir","CIPhotoEffectProcess":"Process","CIPhotoEffectTonal":"Tonal","CIPhotoEffectTransfer":"Transfer","CICircularScreen":"Circle","CIDotScreen":"Dot","CIDiscBlur":"Blur","CIComicEffect":"Comic","CIPixellate":"Pixel","CILineOverlay":"Line"]
-        let filters = filtersDict.keys
-        for filter in filters {
-            let filterName = filtersDict[filter]
-            let filteredImage = filterHelper.applyFilter(image: originalCIImage, filterName: filter)
+        let filters = [
+           Filter(filterName: "CISepiaTone", displayName: "Sepia"),
+           Filter(filterName: "CIColorInvert", displayName: "Invert"),
+           Filter(filterName: "CIColorMonochrome", displayName: "Monochrome"),
+           Filter(filterName: "CIColorPosterize", displayName: "Posterize"),
+           Filter(filterName: "CIPhotoEffectInstant", displayName: "Instant"),
+           Filter(filterName: "CIPhotoEffectFade", displayName: "Sepia"),
+           Filter(filterName: "CIPhotoEffectChrome", displayName: "Chrome"),
+           Filter(filterName: "CIPhotoEffectMono", displayName: "Mono"),
+           Filter(filterName: "CIPhotoEffectNoir", displayName: "Noir"),
+           Filter(filterName: "CIPhotoEffectProcess", displayName: "Process"),
+           Filter(filterName: "CIPhotoEffectTonal", displayName: "Tonal"),
+           Filter(filterName: "CIPhotoEffectTransfer", displayName: "Transfer"),
+           Filter(filterName: "CICircularScreen", displayName: "Circle"),
+           Filter(filterName: "CIDotScreen", displayName: "Dot"),
+           Filter(filterName: "CIDiscBlur", displayName: "Blur"),
+           Filter(filterName: "CIComicEffect", displayName: "Comic"),
+           Filter(filterName: "CIPixellate", displayName: "Pixel"),
+           Filter(filterName: "CILineOverlay", displayName: "Line")
+        ]
+
+        for filter: Filter in filters {
+            let filteredImage = filterHelper.applyFilter(image: originalCIImage, filterName: filter.filterName)
             let imageView = FilterImageView(frame: CGRect(x: currentX, y: 15, width: 90, height: 100))
             imageView.image = filteredImage
             imageView.isUserInteractionEnabled = true
             imageView.backgroundColor = .white
             imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterTapped)))
-            imageView.filterDisplayName = filterName
-            imageView.filterName = filter
+            imageView.filterDisplayName = filter.displayName
+            imageView.filterName = filter.filterName
             filteredImageScrollView.addSubview(imageView)
 
             let label = UILabel(frame: CGRect(x: currentX, y: 0, width: 90, height: 15))
-            label.text = filterName
+            label.text = filter.displayName
             label.textAlignment = .center
             label.textColor = .white
             filteredImageScrollView.addSubview(label)
@@ -202,6 +226,16 @@ class MergedViewController: UIViewController {
         }
     }
 
+    func setFilterImageForFilterView() {
+        for filterView in self.filterView.subviews {
+            if filterView.isKind(of: FilterBaseView.self) {
+                guard let filterView = filterView as? FilterBaseView else { return }
+                filterView.originalImage = imageFromContextImage(image: filterImage)
+                filterView.setUpFilter()
+            }
+        }
+    }
+
     // MARK: Interface Actions
 
     @IBAction func frontImageTapped(_ sender: UITapGestureRecognizer) {
@@ -211,6 +245,7 @@ class MergedViewController: UIViewController {
         imageViewBack.layer.borderWidth = 0.0
         currentSelectedImage = .front
         filterImage = self.frontImage
+        setFilterImageForFilterView()
     }
     @IBAction func backImageTapped(_ sender: UITapGestureRecognizer) {
         imageViewFront.layer.borderColor = UIColor.clear.cgColor
@@ -219,6 +254,7 @@ class MergedViewController: UIViewController {
         imageViewBack.layer.borderWidth = 1.0
         currentSelectedImage = .back
         filterImage = self.backImage
+        setFilterImageForFilterView()
     }
 
     @IBAction func saveFilteredImage(_ sender: UIBarButtonItem) {
@@ -242,7 +278,6 @@ class MergedViewController: UIViewController {
     }
 
     // MARK: Image manipulation
-
     func mergeFrontAndBackImages() -> UIImage {
         let size = CGSize(width: frontImage!.size.width + backImage!.size.width , height: frontImage!.size.height)
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
