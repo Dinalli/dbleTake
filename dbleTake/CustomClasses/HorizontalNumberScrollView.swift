@@ -59,7 +59,7 @@ public protocol HorizontalScrollDelegate: AnyObject {
 
         // LINES
         let lines = UIBezierPath()
-        var contentWidth:Int = 0
+        var contentWidth:Int = 100
 
         // DRAW TEMP OTHER LINES
         for value in stride(from: startValue, to: endValue, by: interval)
@@ -81,12 +81,13 @@ public protocol HorizontalScrollDelegate: AnyObject {
                 label.textAlignment = .center
                 label.text = "\(value)"
                 label.textColor = numberColor
+                label.tag = Int(value)
                 scrollView.addSubview(label)
                 scrollViewLabels.append(label)
                 contentWidth += 50
             }
         }
-        scrollView.contentSize = CGSize(width: contentWidth+300, height: Int(self.frame.size.height))
+        scrollView.contentSize = CGSize(width: contentWidth+50, height: Int(self.frame.size.height))
 
         // DESIGN LINES IN LAYER
         let shapeLayer = CAShapeLayer()
@@ -108,10 +109,9 @@ extension HorizontalNumberScrollView: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         currentValue = CGFloat(lroundf(Float(scrollView.contentOffset.x / CGFloat(endValue)))) //* 50
 
-//        let viewIndex:Int = Int((scrollView.contentOffset.x/50))
-//        let labelView = scrollViewLabels[viewIndex]
-//        guard let valueString = labelView.text else { return }
-//        let valueDouble = CGFloat(Double(valueString)!)
+        let viewIndex:Int = Int((scrollView.contentOffset.x/50))
+        let labelView = scrollViewLabels[viewIndex]
+        print("TAG \(labelView.tag)")
 print(currentValue)
         if delegate != nil {
             delegate?.valueChanged(value: currentValue)

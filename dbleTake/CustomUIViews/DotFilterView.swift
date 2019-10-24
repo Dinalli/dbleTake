@@ -46,7 +46,7 @@ class DotFilterView: FilterBaseView {
         horizontalScrollAngle = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 135, width: self.frame.width, height: 100))
         horizontalScrollAngle.title = "Input Angle"
         horizontalScrollAngle.startValue = 0
-        horizontalScrollAngle.endValue = 1
+        horizontalScrollAngle.endValue = 10
         horizontalScrollAngle.interval = 0.1
         horizontalScrollAngle.numberColor = .white
         horizontalScrollAngle.currentValue = 0.7
