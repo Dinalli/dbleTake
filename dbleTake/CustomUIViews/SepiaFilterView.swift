@@ -25,7 +25,6 @@ class SepiaFilterView: FilterBaseView {
 
     @objc func valueChanged(value: CGFloat) {
         let intensityValue = value/100
-        print(intensityValue)
         let filteredImage = filterHelper.applySepiaFilter(image: self.originalCIImage, intensity: intensityValue)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)

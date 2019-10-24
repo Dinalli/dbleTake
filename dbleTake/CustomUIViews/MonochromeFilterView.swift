@@ -25,7 +25,7 @@ class MonochromeFilterView: FilterBaseView {
         rulerView.pointerImageView.layer.cornerRadius = 2
         rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
 
-        let colorPickerView = ColorPickerView(frame: CGRect(x: 0, y: 100, width: self.frame.width, height: 100))
+        let colorPickerView = ColorPickerView(frame: CGRect(x: 0, y: 80, width: self.frame.width, height: 150))
         colorPickerView.onColorDidChange = { [weak self] color in
             DispatchQueue.main.async {
                 // use picked color for your needs here...
@@ -43,7 +43,6 @@ class MonochromeFilterView: FilterBaseView {
 
     @objc func valueChanged(value: CGFloat) {
         inputIntensity = value / 100
-        print("Input Intensity \(inputIntensity)")
         let filteredImage = filterHelper.applyMonochromeFilter(image: self.originalCIImage,
                                                                inputColor: CIColor(color: inputColor),
                                                                inputIntensity: inputIntensity)

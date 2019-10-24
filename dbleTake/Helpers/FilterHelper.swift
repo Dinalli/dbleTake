@@ -30,9 +30,9 @@ class FilterHelper: NSObject {
     }
 
     func applyPosterizeFilter(image: CIImage, inputLevel: CGFloat) -> UIImage {
-        let filter = CIFilter(name: "CICIColorPosterize")
+        let filter = CIFilter(name: "CIColorPosterize")
         filter?.setValue(image, forKey: kCIInputImageKey)
-        filter?.setValue(inputLevel, forKey: kCIInputScaleKey)
+        filter?.setValue(inputLevel, forKey: "inputLevels")
         guard let returnCIImage = filter?.outputImage else { return UIImage(ciImage: image) }
         return UIImage(ciImage: returnCIImage)
     }
