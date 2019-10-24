@@ -15,56 +15,33 @@ class DotFilterView: FilterBaseView {
     var inputAngle: CGFloat = 1.0
     var inputCenter: CIVector = CIVector(x: 150.0, y: 150.0)
     var inputSharpness: CGFloat = 1.0
-    var horizontalScrollWidth: HorizontalNumberScrollView!
-    var horizontalScrollAngle: HorizontalNumberScrollView!
-    var horizontalScrollSharpness: HorizontalNumberScrollView!
 
     override func configure() {
         super.configure()
-        horizontalScrollWidth = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 5, width: self.frame.width, height: 100))
-        horizontalScrollWidth.title = "Input Width"
-        horizontalScrollWidth.startValue = 0
-        horizontalScrollWidth.endValue = 18
-        horizontalScrollWidth.interval = 0.1
-        horizontalScrollWidth.numberColor = .white
-        horizontalScrollWidth.delegate = self
-        horizontalScrollWidth.currentValue = 6.0
-        horizontalScrollWidth.configure()
-        self.addSubview(horizontalScrollWidth)
+        let rulerView = Ruler(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 50))
+        self.addSubview(rulerView)
+        rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 20)
+        rulerView.tintColor = .white
+        rulerView.pointerImageView.layer.cornerRadius = 2
+        rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
 
-        horizontalScrollSharpness = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 75, width: self.frame.width, height: 100))
-        horizontalScrollSharpness.title = "Input Sharpness"
-        horizontalScrollSharpness.startValue = 0
-        horizontalScrollSharpness.endValue = 1
-        horizontalScrollSharpness.interval = 0.1
-        horizontalScrollSharpness.numberColor = .white
-        horizontalScrollSharpness.currentValue = 0.7
-        horizontalScrollSharpness.delegate = self
-        horizontalScrollSharpness.configure()
-        self.addSubview(horizontalScrollSharpness)
+        let sharpNessRulerView = Ruler(frame: CGRect(x: 0, y: 65, width: self.frame.width, height: 50))
+        self.addSubview(sharpNessRulerView)
+        sharpNessRulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 100)
+        sharpNessRulerView.tintColor = .white
+        sharpNessRulerView.pointerImageView.layer.cornerRadius = 2
+        sharpNessRulerView.addTarget(self, action: #selector(sharpnessValueChanged(value:)), for: .valueChanged)
 
-        horizontalScrollAngle = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 135, width: self.frame.width, height: 100))
-        horizontalScrollAngle.title = "Input Angle"
-        horizontalScrollAngle.startValue = 0
-        horizontalScrollAngle.endValue = 10
-        horizontalScrollAngle.interval = 0.1
-        horizontalScrollAngle.numberColor = .white
-        horizontalScrollAngle.currentValue = 0.7
-        horizontalScrollAngle.delegate = self
-        horizontalScrollAngle.configure()
-        self.addSubview(horizontalScrollAngle)
+        let angleRulerView = Ruler(frame: CGRect(x: 0, y: 115, width: self.frame.width, height: 50))
+        self.addSubview(angleRulerView)
+        angleRulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 45)
+        angleRulerView.tintColor = .white
+        angleRulerView.pointerImageView.layer.cornerRadius = 2
+        angleRulerView.addTarget(self, action: #selector(angleValueChanged(value:)), for: .valueChanged)
     }
 
-    override func setUpFilter() {
-        super.setUpFilter()
-    }
-}
-
-extension DotFilterView: HorizontalScrollDelegate {
-    func valueChanged(value: CGFloat) {
-        inputWidth = horizontalScrollWidth.currentValue
-        inputSharpness = horizontalScrollSharpness.currentValue
-        inputAngle = horizontalScrollAngle.currentValue
+    @objc func valueChanged(value: CGFloat) {
+        inputWidth = value
         let filteredImage = filterHelper.applyDotFilter(image: originalCIImage,
                                                            inputWidth: inputWidth,
                                                            center: inputCenter,
@@ -73,5 +50,33 @@ extension DotFilterView: HorizontalScrollDelegate {
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }
+    }
+
+    @objc func sharpnessValueChanged(value: CGFloat) {
+        inputSharpness = value / 100
+        let filteredImage = filterHelper.applyDotFilter(image: originalCIImage,
+                                                           inputWidth: inputWidth,
+                                                           center: inputCenter,
+                                                           angle: inputAngle,
+                                                           sharpness: inputSharpness)
+        if delegate != nil {
+            delegate?.updateImage(image: filteredImage)
+        }
+    }
+
+    @objc func angleValueChanged(value: CGFloat) {
+        inputAngle = value / 100
+        let filteredImage = filterHelper.applyDotFilter(image: originalCIImage,
+                                                           inputWidth: inputWidth,
+                                                           center: inputCenter,
+                                                           angle: inputAngle,
+                                                           sharpness: inputSharpness)
+        if delegate != nil {
+            delegate?.updateImage(image: filteredImage)
+        }
+    }
+
+    override func setUpFilter() {
+        super.setUpFilter()
     }
 }

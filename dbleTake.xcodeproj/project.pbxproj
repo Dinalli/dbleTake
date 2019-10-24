@@ -17,7 +17,6 @@
 		40215C53232B911F001A90B1 /* ShutterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40215C52232B911F001A90B1 /* ShutterButton.swift */; };
 		4025F367234B87D5008E6D38 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4025F366234B87D5008E6D38 /* Extension.swift */; };
 		4025F369234B88F2008E6D38 /* MergedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4025F368234B88F2008E6D38 /* MergedViewController.swift */; };
-		40359D0D23508AF600F5564B /* HorizontalNumberScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40359D0C23508AF600F5564B /* HorizontalNumberScrollView.swift */; };
 		403ADA74234A5DDD004F1295 /* TimerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403ADA73234A5DDD004F1295 /* TimerButtons.swift */; };
 		40435987235DC27B009A83A2 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40435986235DC27B009A83A2 /* ColorPickerView.swift */; };
 		4057CE312354822A009742C3 /* FilterBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057CE302354822A009742C3 /* FilterBaseView.swift */; };
@@ -57,7 +56,6 @@
 		40215C52232B911F001A90B1 /* ShutterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShutterButton.swift; sourceTree = "<group>"; };
 		4025F366234B87D5008E6D38 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4025F368234B88F2008E6D38 /* MergedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergedViewController.swift; sourceTree = "<group>"; };
-		40359D0C23508AF600F5564B /* HorizontalNumberScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalNumberScrollView.swift; sourceTree = "<group>"; };
 		403ADA73234A5DDD004F1295 /* TimerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerButtons.swift; sourceTree = "<group>"; };
 		40435986235DC27B009A83A2 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		4057CE302354822A009742C3 /* FilterBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBaseView.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 				40215C52232B911F001A90B1 /* ShutterButton.swift */,
 				407F43B823473F7400FD0F4B /* ToastButtonBar.swift */,
 				403ADA73234A5DDD004F1295 /* TimerButtons.swift */,
-				40359D0C23508AF600F5564B /* HorizontalNumberScrollView.swift */,
 				406D29EA2351E73C006828EC /* CircularTrackingView.swift */,
 				40E76E312355B542003D231A /* PointerView.swift */,
 				40BA54D323570D6700EFDE79 /* FilterImageView.swift */,
@@ -375,7 +372,6 @@
 				40BE5DCA232BC0F60070B740 /* CaptureViewControllerModel.swift in Sources */,
 				40215C39232B85ED001A90B1 /* SceneDelegate.swift in Sources */,
 				4057CE312354822A009742C3 /* FilterBaseView.swift in Sources */,
-				40359D0D23508AF600F5564B /* HorizontalNumberScrollView.swift in Sources */,
 				406DD359232B91D800392121 /* CaptureViewController.swift in Sources */,
 				406DD35C232B91FB00392121 /* PreviewView.swift in Sources */,
 				40B9918F235EF7E200652AFA /* RulerLayer.swift in Sources */,

@@ -10,35 +10,30 @@ import UIKit
 
 class PosterizeFilterView: FilterBaseView {
 
-      let filterHelper = FilterHelper()
+  let filterHelper = FilterHelper()
 
-        var inputLevel: CGFloat = 1.0
-        var horizontalSCroll: HorizontalNumberScrollView!
+    var inputLevel: CGFloat = 1.0
 
-        override func configure() {
-            super.configure()
-            horizontalSCroll = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 5, width: self.frame.width, height: 100))
-            horizontalSCroll.title = "Input Level"
-            horizontalSCroll.startValue = 0
-            horizontalSCroll.endValue = 100
-            horizontalSCroll.interval = 0.1
-            horizontalSCroll.numberColor = .white
-            horizontalSCroll.delegate = self
-            horizontalSCroll.configure()
-            self.addSubview(horizontalSCroll)
-        }
-
-        override func setUpFilter() {
-            super.setUpFilter()
-        }
+    override func configure() {
+        super.configure()
+        let rulerView = Ruler(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 50))
+        self.addSubview(rulerView)
+        rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 12)
+        rulerView.tintColor = .white
+        rulerView.pointerImageView.layer.cornerRadius = 2
+        rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
     }
 
-extension PosterizeFilterView: HorizontalScrollDelegate {
-    func valueChanged(value: CGFloat) {
+    @objc func valueChanged(value: CGFloat) {
         let inputLevel = value
         let filteredImage = filterHelper.applyPosterizeFilter(image: self.originalCIImage, inputLevel: inputLevel)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }
     }
+
+    override func setUpFilter() {
+        super.setUpFilter()
+    }
 }
+

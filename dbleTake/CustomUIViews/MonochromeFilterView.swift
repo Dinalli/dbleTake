@@ -14,19 +14,16 @@ class MonochromeFilterView: FilterBaseView {
 
     var inputColor: UIColor = .green
     var inputIntensity: CGFloat = 1.0
-    var horizontalSCroll: HorizontalNumberScrollView!
 
     override func configure() {
         super.configure()
-        horizontalSCroll = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 5, width: self.frame.width, height: 100))
-        horizontalSCroll.title = "Input Intensity %"
-        horizontalSCroll.startValue = 0
-        horizontalSCroll.endValue = 100
-        horizontalSCroll.interval = 0.1
-        horizontalSCroll.numberColor = .white
-        horizontalSCroll.delegate = self
-        horizontalSCroll.configure()
-        self.addSubview(horizontalSCroll)
+
+        let rulerView = Ruler(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 50))
+        self.addSubview(rulerView)
+        rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 100)
+        rulerView.tintColor = .white
+        rulerView.pointerImageView.layer.cornerRadius = 2
+        rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
 
         let colorPickerView = ColorPickerView(frame: CGRect(x: 0, y: 100, width: self.frame.width, height: 100))
         colorPickerView.onColorDidChange = { [weak self] color in
@@ -44,13 +41,7 @@ class MonochromeFilterView: FilterBaseView {
         self.addSubview(colorPickerView)
     }
 
-    override func setUpFilter() {
-        super.setUpFilter()
-    }
-}
-
-extension MonochromeFilterView: HorizontalScrollDelegate {
-    func valueChanged(value: CGFloat) {
+    @objc func valueChanged(value: CGFloat) {
         inputIntensity = value / 100
         print("Input Intensity \(inputIntensity)")
         let filteredImage = filterHelper.applyMonochromeFilter(image: self.originalCIImage,
@@ -59,5 +50,9 @@ extension MonochromeFilterView: HorizontalScrollDelegate {
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }
+    }
+
+    override func setUpFilter() {
+        super.setUpFilter()
     }
 }

@@ -69,7 +69,7 @@ class MergedViewController: UIViewController {
            Filter(filterName: "CIColorMonochrome", displayName: "Monochrome"),
            Filter(filterName: "CIColorPosterize", displayName: "Posterize"),
            Filter(filterName: "CIPhotoEffectInstant", displayName: "Instant"),
-           Filter(filterName: "CIPhotoEffectFade", displayName: "Sepia"),
+           Filter(filterName: "CIPhotoEffectFade", displayName: "Fade"),
            Filter(filterName: "CIPhotoEffectChrome", displayName: "Chrome"),
            Filter(filterName: "CIPhotoEffectMono", displayName: "Mono"),
            Filter(filterName: "CIPhotoEffectNoir", displayName: "Noir"),
