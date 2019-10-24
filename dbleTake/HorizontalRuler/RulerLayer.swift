@@ -29,8 +29,8 @@ class RulerLayer: CALayer {
     let kDefaultFrequencyForMajorMark = 10.0
     let kDefaultFrequencyForMiddleMark = 5.0
     let kSideOffset = 30.0
-    let kMiddleMarkSize = CGSize(width: 1, height: 15)
-    let kMajorMarkSize = CGSize(width: 1, height: 30)
+    let kMiddleMarkSize = CGSize(width: 1, height: 5)
+    let kMajorMarkSize = CGSize(width: 1, height: 10)
 
     override init() {
         super.init()
@@ -43,6 +43,7 @@ class RulerLayer: CALayer {
     }
 
     func commonInit() {
+        self.backgroundColor = UIColor.red.cgColor
         self.minorMark = RulerMark()
         self.minorMark.textColor = UIColor.clear
         self.middleMark = RulerMark()
@@ -89,15 +90,15 @@ class RulerLayer: CALayer {
         textMarkFormatter.maximumFractionDigits = 2
 
         for i in 0..<numberOfLines {
-            arrayWithTypeMarks[i] = self.minorMark
+            arrayWithTypeMarks.insert(self.minorMark, at: i)
             if Int(middleMark.frequency) != 0 {
                 if ((i + numberOfLinesToZeroForMiddle) % Int(middleMark.frequency) == 0) {
-                    arrayWithTypeMarks[i] = self.middleMark
+                    arrayWithTypeMarks.insert(self.middleMark, at: i)
                 }
             }
             if Int(majorMark.frequency) != 0 {
                 if ((i + numberOfLinesToZeroForMajor) % Int(majorMark.frequency) == 0) {
-                    arrayWithTypeMarks[i] = self.majorMark
+                   arrayWithTypeMarks.insert(self.majorMark, at: i)
                 }
             }
         }

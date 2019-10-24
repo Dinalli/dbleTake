@@ -56,7 +56,7 @@ import UIKit
     override func awakeFromNib() {
         super.awakeFromNib()
         if spacingBetweenMarks > 0 {
-
+            self.rulerWidth = spacingBetweenMarks * rangeLength
         }
         self.commonInit()
     }
@@ -140,7 +140,7 @@ import UIKit
         let pointerImageViewOriginX: CGFloat = (self.frame.size.width - kPointerImageViewSize.width) / 2
         let pointerImageViewOriginY: CGFloat = (self.frame.size.height - kPointerImageViewSize.height) / 2
         let rulerCenterViewRect: CGRect = CGRect(x: pointerImageViewOriginX, y:pointerImageViewOriginY,
-                                                 width: kPointerImageViewSize.width, height: kPointerImageViewSize.height)
+                                                 width: kPointerImageViewSize.width, height: kPointerImageViewSize.height/2)
         return rulerCenterViewRect;
     }
 
@@ -167,12 +167,8 @@ import UIKit
         self.pointerImageView.backgroundColor = self.tintColor
     }
 
-    func setRangeFrom(rangeFrom: CGFloat) {
-        self.rangeFrom = rangeFrom;
-        self.setRange()
-    }
-
-    func setRangeLength(rangeLength: CGFloat) {
+    func setRangeFromAndLength(rangeFrom: CGFloat, rangeLength: CGFloat) {
+        self.rangeFrom = rangeFrom
         self.rangeLength = rangeLength
         self.setRange()
     }

@@ -11,34 +11,28 @@ import UIKit
 class SepiaFilterView: FilterBaseView {
 
     let filterHelper = FilterHelper()
-
     var intensity: CGFloat = 1.0
-    var horizontalSCroll: HorizontalNumberScrollView!
 
     override func configure() {
         super.configure()
-        horizontalSCroll = HorizontalNumberScrollView(frame: CGRect(x: 0, y: 5, width: self.frame.width, height: 100))
-        horizontalSCroll.title = "InputLevel"
-        horizontalSCroll.startValue = 0
-        horizontalSCroll.endValue = 100
-        horizontalSCroll.interval = 0.1
-        horizontalSCroll.numberColor = .white
-        horizontalSCroll.delegate = self
-        horizontalSCroll.configure()
-        self.addSubview(horizontalSCroll)
+        let rulerView = Ruler(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 50))
+        self.addSubview(rulerView)
+        rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 100.0)
+        rulerView.tintColor = .white
+        rulerView.pointerImageView.layer.cornerRadius = 2
+        rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
     }
 
-    override func setUpFilter() {
-        super.setUpFilter()
-    }
-}
-
-extension SepiaFilterView: HorizontalScrollDelegate {
-    func valueChanged(value: CGFloat) {
+    @objc func valueChanged(value: CGFloat) {
         let intensityValue = value/100
+        print(intensityValue)
         let filteredImage = filterHelper.applySepiaFilter(image: self.originalCIImage, intensity: intensityValue)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
         }
+    }
+
+    override func setUpFilter() {
+        super.setUpFilter()
     }
 }
