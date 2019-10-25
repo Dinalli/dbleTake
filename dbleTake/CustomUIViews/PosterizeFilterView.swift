@@ -14,8 +14,7 @@ class PosterizeFilterView: FilterBaseView {
 
     var inputLevel: CGFloat = 1.0
 
-    override func configure() {
-        super.configure()
+    func configure() {
         let rulerView = Ruler(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 50))
         self.addSubview(rulerView)
         rulerView.setRangeFromAndLength(rangeFrom: 2.0, rangeLength: 12)
@@ -35,6 +34,7 @@ class PosterizeFilterView: FilterBaseView {
 
     override func setUpFilter() {
         super.setUpFilter()
+        configure()
     }
 }
 

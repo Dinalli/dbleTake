@@ -14,8 +14,7 @@ class BlurFilterView: FilterBaseView {
 
     var inputRadius: CGFloat = 1.0
 
-    override func configure() {
-        super.configure()
+    func configure() {
         let rulerView = Ruler(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 50))
         self.addSubview(rulerView)
         rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 20)
@@ -26,6 +25,7 @@ class BlurFilterView: FilterBaseView {
 
     override func setUpFilter() {
         super.setUpFilter()
+        configure()
     }
 
     @objc func valueChanged(value: CGFloat) {

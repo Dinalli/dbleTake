@@ -16,8 +16,7 @@ class DotFilterView: FilterBaseView {
     var inputCenter: CIVector = CIVector(x: 150.0, y: 150.0)
     var inputSharpness: CGFloat = 1.0
 
-    override func configure() {
-        super.configure()
+    func configure() {
         let rulerView = Ruler(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 50))
         self.addSubview(rulerView)
         rulerView.setRangeFromAndLength(rangeFrom: 100, rangeLength: 250)
@@ -78,5 +77,6 @@ class DotFilterView: FilterBaseView {
 
     override func setUpFilter() {
         super.setUpFilter()
+        configure()
     }
 }

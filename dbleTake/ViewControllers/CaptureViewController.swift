@@ -494,8 +494,8 @@ extension CaptureViewController: AVCapturePhotoCaptureDelegate {
             return
         }
 
-        PHPhotoLibrary.requestAuthorization { status in
-            if status == .authorized {
+//        PHPhotoLibrary.requestAuthorization { status in
+//            if status == .authorized {
 //                PHPhotoLibrary.shared().performChanges({
 //                    let options = PHAssetResourceCreationOptions()
 //                    let creationRequest = PHAssetCreationRequest.forAsset()
@@ -505,8 +505,8 @@ extension CaptureViewController: AVCapturePhotoCaptureDelegate {
 //                        print("Error occurred while saving photo to photo library: \(error)")
 //                    }
 //                })
-            }
-        }
+//            }
+//        }
 
         guard let imageData = photo.fileDataRepresentation() else {
             print("Error while generating image from photo capture data.");

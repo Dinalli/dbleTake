@@ -26,6 +26,8 @@ class MergedViewController: UIViewController {
     let filterHelper = FilterHelper()
     var frontImage: UIImage!
     var backImage: UIImage!
+    var originalFrontImage: UIImage!
+    var originalBackImage: UIImage!
     var filterImage: UIImage!
 
     @IBOutlet weak var imageViewFront: UIImageView!
@@ -38,6 +40,8 @@ class MergedViewController: UIViewController {
         // Do any additional setup after loading the view.
         imageViewBack.image = backImage
         imageViewFront.image = frontImage
+        originalFrontImage = frontImage
+        originalBackImage = backImage
         filterImage = frontImage
         
         imageViewFront.layer.borderColor = UIColor.red.cgColor
@@ -48,14 +52,16 @@ class MergedViewController: UIViewController {
         imageViewFront.contentMode = .scaleAspectFill
         imageViewBack.contentMode = .scaleAspectFill
 
-        var thumbImage : UIImage
-        let newImage = mergeFrontAndBackImages()
-        let thumbSize = CGSize(width: 90, height: 100)
-        UIGraphicsBeginImageContext(thumbSize)
-        newImage.draw(in: CGRect(x: 0,y: 0, width: 90, height: 100))
-        thumbImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        showFilteredImages(image: thumbImage)
+        autoreleasepool {
+            let newImage = mergeFrontAndBackImages()
+            let thumbSize = CGSize(width: 90, height: 100)
+//            UIGraphicsBeginImageContext(thumbSize)
+//            newImage.draw(in: CGRect(x: 0,y: 0, width: 90, height: 100))
+//            thumbImage = UIGraphicsGetImageFromCurrentImageContext()!
+//            UIGraphicsEndImageContext()
+            guard let imageData = newImage.jpegData(compressionQuality: 1) else { return }
+            showFilteredImages(image: downsample(imageData: imageData, to: thumbSize, scale: 1.0))
+        }
     }
 
     // MARK: Filters
@@ -260,7 +266,6 @@ class MergedViewController: UIViewController {
     }
 
     @IBAction func saveFilteredImage(_ sender: UIBarButtonItem) {
-        //let imageToSave =
         PHPhotoLibrary.requestAuthorization { status in
             if status == .authorized {
                 PHPhotoLibrary.shared().performChanges({
@@ -279,24 +284,51 @@ class MergedViewController: UIViewController {
         }
     }
 
+    @IBAction func resetImages(_ sender: UIBarButtonItem) {
+        if self.currentSelectedImage == .front {
+            self.imageViewFront.image = originalFrontImage
+            self.frontImage = originalFrontImage
+        } else if self.currentSelectedImage == .back {
+            self.imageViewBack.image = originalBackImage
+            self.backImage = originalBackImage
+        }
+    }
+
     // MARK: Image manipulation
     func mergeFrontAndBackImages() -> UIImage {
-        let size = CGSize(width: frontImage!.size.width + backImage!.size.width , height: frontImage!.size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        frontImage!.draw(in: CGRect(x: 0, y: 0, width: frontImage!.size.width, height: size.height))
-        backImage!.draw(in: CGRect(x: frontImage!.size.width, y: 0, width: backImage!.size.width, height: size.height))
-        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return newImage
+        autoreleasepool {
+            let size = CGSize(width: frontImage!.size.width + backImage!.size.width , height: frontImage!.size.height)
+            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+            frontImage!.draw(in: CGRect(x: 0, y: 0, width: frontImage!.size.width, height: size.height))
+            backImage!.draw(in: CGRect(x: frontImage!.size.width, y: 0, width: backImage!.size.width, height: size.height))
+            let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+            return newImage
+        }
     }
 
     func imageFromContextImage(image: UIImage) -> UIImage {
-        let size = CGSize(width: image.size.width , height: image.size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: size.height))
-        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return newImage
+        autoreleasepool {
+            let size = CGSize(width: image.size.width , height: image.size.height)
+            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+            image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: size.height))
+            let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+            return newImage
+        }
+    }
+
+    // Downsampling large images for display at smaller size
+    func downsample(imageData: Data, to pointSize: CGSize, scale: CGFloat) -> UIImage {
+        let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
+        let imageSource = CGImageSourceCreateWithData(imageData as CFData, imageSourceOptions)!
+        let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
+        let downsampleOptions =  [kCGImageSourceCreateThumbnailFromImageAlways: true,
+                                  kCGImageSourceShouldCacheImmediately: true,
+                                  kCGImageSourceCreateThumbnailWithTransform: true,
+                                  kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels] as CFDictionary
+        let downsampledImage =   CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions)!
+        return UIImage(cgImage: downsampledImage)
     }
 }
 
@@ -305,8 +337,10 @@ extension MergedViewController: FilterDelegate {
         DispatchQueue.main.async {
             if self.currentSelectedImage == .front {
                 self.imageViewFront.image = image
+                self.frontImage = image
             } else if self.currentSelectedImage == .back {
                 self.imageViewBack.image = image
+                self.backImage = image
             }
         }
     }
