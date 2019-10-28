@@ -488,11 +488,11 @@ extension CaptureViewController: AVCapturePhotoCaptureDelegate {
             print("Error capturing photo: \(error)")
             return
         }
-
-        guard let photoData = photo.fileDataRepresentation() else {
-            print("No photo data resource")
-            return
-        }
+//
+//        guard let photoData = photo.fileDataRepresentation() else {
+//            print("No photo data resource")
+//            return
+//        }
 
 //        PHPhotoLibrary.requestAuthorization { status in
 //            if status == .authorized {

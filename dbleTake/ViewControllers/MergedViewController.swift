@@ -11,24 +11,20 @@ import Photos
 
 class MergedViewController: UIViewController {
 
+    let model = MergedViewControllerModel()
+    let imageHelper = ImageHelper()
+    let filterHelper = FilterHelper()
+
     struct Filter {
         let filterName: String
         let displayName: String
         var description: String { return displayName }
     }
 
-    enum SelectedImage {
-        case front
-        case back
-    }
-
-    var currentSelectedImage: SelectedImage = .front
-    let filterHelper = FilterHelper()
     var frontImage: UIImage!
     var backImage: UIImage!
     var originalFrontImage: UIImage!
     var originalBackImage: UIImage!
-    var filterImage: UIImage!
 
     @IBOutlet weak var imageViewFront: UIImageView!
     @IBOutlet weak var imageViewBack: UIImageView!
@@ -42,7 +38,6 @@ class MergedViewController: UIViewController {
         imageViewFront.image = frontImage
         originalFrontImage = frontImage
         originalBackImage = backImage
-        filterImage = frontImage
         
         imageViewFront.layer.borderColor = UIColor.red.cgColor
         imageViewFront.layer.borderWidth = 1.0
@@ -52,20 +47,24 @@ class MergedViewController: UIViewController {
         imageViewFront.contentMode = .scaleAspectFill
         imageViewBack.contentMode = .scaleAspectFill
 
+        setUpModel()
+
         autoreleasepool {
-            let newImage = mergeFrontAndBackImages()
+            let newImage = imageHelper.mergeFrontAndBackImagesPortrait(frontImage: frontImage, backImage: backImage)
             let thumbSize = CGSize(width: 90, height: 100)
-//            UIGraphicsBeginImageContext(thumbSize)
-//            newImage.draw(in: CGRect(x: 0,y: 0, width: 90, height: 100))
-//            thumbImage = UIGraphicsGetImageFromCurrentImageContext()!
-//            UIGraphicsEndImageContext()
             guard let imageData = newImage.jpegData(compressionQuality: 1) else { return }
-            showFilteredImages(image: downsample(imageData: imageData, to: thumbSize, scale: 1.0))
+            showFilteredImages(image: imageHelper.downsample(imageData: imageData, to: thumbSize, scale: 1.0))
         }
     }
 
-    // MARK: Filters
+    func setUpModel() {
+        model.filterImage = frontImage
+        model.imageViewBack = imageViewBack
+        model.imageViewFront = imageViewFront
+        model.viewControllerForDelegate = self
+    }
 
+    // MARK: Filters
     func showFilteredImages(image: UIImage) {
         var currentX: Int = 5
         guard let originalCIImage = CIImage(image: image) else { return }
@@ -114,162 +113,34 @@ class MergedViewController: UIViewController {
     @objc func filterTapped(_ sender: UITapGestureRecognizer) {
         guard let filterImageView = sender.view as? FilterImageView else { return }
         let filterName: String = filterImageView.filterDisplayName
-        setUpFilterView(currentFilter: filterName)
-    }
-
-    func setUpFilterView(currentFilter: String) {
-        self.filterView.subviews.forEach { $0.removeFromSuperview() }
-        switch currentFilter {
-            case "none":
-                break
-            case "Sepia":
-                setUpSepiaFilter()
-            case "Invert":
-                applyBaisicFilter(filter: "CIColorInvert")
-            case "Monochrome":
-                setUpMonochromeFilter()
-            case "Instant":
-                applyBaisicFilter(filter: "CIPhotoEffectInstant")
-            case "Posterize":
-                setUpPosterizeFilter()
-            case "Fade":
-                applyBaisicFilter(filter: "CIPhotoEffectFade")
-            case "Chrome":
-                applyBaisicFilter(filter: "CIPhotoEffectChrome")
-            case "Mono":
-                applyBaisicFilter(filter: "CIPhotoEffectMono")
-            case "Noir":
-                applyBaisicFilter(filter: "CIPhotoEffectNoir")
-            case "Process":
-                applyBaisicFilter(filter: "CIPhotoEffectProcess")
-            case "Tonal":
-                applyBaisicFilter(filter: "CIPhotoEffectTonal")
-            case "Transfer":
-                applyBaisicFilter(filter: "CIPhotoEffectTransfer")
-            case "Circle":
-                setUpCircleFilter()
-            case "Dot":
-                setUpDotFilter()
-            case "Blur":
-                setUpBlurFilter()
-            case "Comic":
-                applyBaisicFilter(filter: "CIComicEffect")
-            case "Pixel":
-                setUpPixelFilter()
-            case "Line":
-                applyBaisicFilter(filter: "CILineOverlay")
-        default:
-            break
-        }
-    }
-
-    func setUpSepiaFilter() {
-        let sepiaView = SepiaFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        sepiaView.originalImage = imageFromContextImage(image: filterImage)
-        sepiaView.delegate = self
-        sepiaView.intensity = 1.0
-        sepiaView.setUpFilter()
-        self.filterView.addSubview(sepiaView)
-    }
-
-    func setUpMonochromeFilter() {
-        let monochromeView = MonochromeFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        monochromeView.originalImage = imageFromContextImage(image: filterImage)
-        monochromeView.delegate = self
-        monochromeView.setUpFilter()
-        self.filterView.addSubview(monochromeView)
-    }
-
-    func setUpPosterizeFilter() {
-        let posterizeView = PosterizeFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        posterizeView.originalImage = imageFromContextImage(image: filterImage)
-        posterizeView.delegate = self
-        posterizeView.inputLevel = 6.0
-        posterizeView.setUpFilter()
-        self.filterView.addSubview(posterizeView)
-    }
-
-    func setUpCircleFilter() {
-        let circleView = CircleFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        circleView.originalImage = imageFromContextImage(image: filterImage)
-        circleView.inputCenter = CIVector(x: filterImage.size.width/2, y: filterImage.size.height/2)
-        circleView.delegate = self
-        circleView.setUpFilter()
-        self.filterView.addSubview(circleView)
-    }
-
-    func setUpDotFilter() {
-        let dotView = DotFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        dotView.originalImage = imageFromContextImage(image: filterImage)
-        dotView.inputCenter = CIVector(x: filterImage.size.width/2, y: filterImage.size.height/2)
-        dotView.delegate = self
-        dotView.setUpFilter()
-        self.filterView.addSubview(dotView)
-    }
-
-    func setUpBlurFilter() {
-        let blurView = BlurFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        blurView.originalImage = imageFromContextImage(image: filterImage)
-        blurView.delegate = self
-        blurView.setUpFilter()
-        self.filterView.addSubview(blurView)
-    }
-
-    func setUpPixelFilter() {
-        let pixelView = PixelFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        pixelView.originalImage = imageFromContextImage(image: filterImage)
-        pixelView.delegate = self
-        pixelView.setUpFilter()
-        self.filterView.addSubview(pixelView)
-    }
-
-    func applyBaisicFilter(filter: String) {
-        let filterImage = imageFromContextImage(image: self.filterImage)
-        guard let originalCIImage = CIImage(image: filterImage) else { return }
-        let filteredImage = filterHelper.applyFilter(image: originalCIImage, filterName: filter)
-        if self.currentSelectedImage == .front {
-            self.imageViewFront.image = filteredImage
-        } else if self.currentSelectedImage == .back {
-            self.imageViewBack.image = filteredImage
-        }
-    }
-
-    func setFilterImageForFilterView() {
-        for filterView in self.filterView.subviews {
-            if filterView.isKind(of: FilterBaseView.self) {
-                guard let filterView = filterView as? FilterBaseView else { return }
-                filterView.originalImage = imageFromContextImage(image: filterImage)
-                filterView.setUpFilter()
-            }
-        }
+        model.setUpFilterView(currentFilter: filterName)
     }
 
     // MARK: Interface Actions
-
     @IBAction func frontImageTapped(_ sender: UITapGestureRecognizer) {
         imageViewFront.layer.borderColor = UIColor.red.cgColor
         imageViewFront.layer.borderWidth = 1.0
         imageViewBack.layer.borderColor = UIColor.clear.cgColor
         imageViewBack.layer.borderWidth = 0.0
-        currentSelectedImage = .front
-        filterImage = self.frontImage
-        setFilterImageForFilterView()
+        model.currentSelectedImage = .front
+        model.filterImage = self.frontImage
+        model.setFilterImageForFilterView()
     }
     @IBAction func backImageTapped(_ sender: UITapGestureRecognizer) {
         imageViewFront.layer.borderColor = UIColor.clear.cgColor
         imageViewFront.layer.borderWidth = 0.0
         imageViewBack.layer.borderColor = UIColor.red.cgColor
         imageViewBack.layer.borderWidth = 1.0
-        currentSelectedImage = .back
-        filterImage = self.backImage
-        setFilterImageForFilterView()
+        model.currentSelectedImage = .back
+        model.filterImage = self.backImage
+        model.setFilterImageForFilterView()
     }
 
     @IBAction func saveFilteredImage(_ sender: UIBarButtonItem) {
         PHPhotoLibrary.requestAuthorization { status in
             if status == .authorized {
                 PHPhotoLibrary.shared().performChanges({
-                    let mergedImage = self.mergeFrontAndBackImages()
+                    let mergedImage = self.imageHelper.mergeFrontAndBackImagesPortrait(frontImage: self.frontImage, backImage: self.backImage)
                     guard let photoData = mergedImage.jpegData(compressionQuality: 1) else { return }
                     let options = PHAssetResourceCreationOptions()
                     let creationRequest = PHAssetCreationRequest.forAsset()
@@ -285,60 +156,23 @@ class MergedViewController: UIViewController {
     }
 
     @IBAction func resetImages(_ sender: UIBarButtonItem) {
-        if self.currentSelectedImage == .front {
+        if model.currentSelectedImage == .front {
             self.imageViewFront.image = originalFrontImage
             self.frontImage = originalFrontImage
-        } else if self.currentSelectedImage == .back {
+        } else if model.currentSelectedImage == .back {
             self.imageViewBack.image = originalBackImage
             self.backImage = originalBackImage
         }
-    }
-
-    // MARK: Image manipulation
-    func mergeFrontAndBackImages() -> UIImage {
-        autoreleasepool {
-            let size = CGSize(width: frontImage!.size.width + backImage!.size.width , height: frontImage!.size.height)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-            frontImage!.draw(in: CGRect(x: 0, y: 0, width: frontImage!.size.width, height: size.height))
-            backImage!.draw(in: CGRect(x: frontImage!.size.width, y: 0, width: backImage!.size.width, height: size.height))
-            let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
-            return newImage
-        }
-    }
-
-    func imageFromContextImage(image: UIImage) -> UIImage {
-        autoreleasepool {
-            let size = CGSize(width: image.size.width , height: image.size.height)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-            image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: size.height))
-            let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
-            return newImage
-        }
-    }
-
-    // Downsampling large images for display at smaller size
-    func downsample(imageData: Data, to pointSize: CGSize, scale: CGFloat) -> UIImage {
-        let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
-        let imageSource = CGImageSourceCreateWithData(imageData as CFData, imageSourceOptions)!
-        let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
-        let downsampleOptions =  [kCGImageSourceCreateThumbnailFromImageAlways: true,
-                                  kCGImageSourceShouldCacheImmediately: true,
-                                  kCGImageSourceCreateThumbnailWithTransform: true,
-                                  kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels] as CFDictionary
-        let downsampledImage =   CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions)!
-        return UIImage(cgImage: downsampledImage)
     }
 }
 
 extension MergedViewController: FilterDelegate {
     func updateImage(image: UIImage) {
         DispatchQueue.main.async {
-            if self.currentSelectedImage == .front {
+            if self.model.currentSelectedImage == .front {
                 self.imageViewFront.image = image
                 self.frontImage = image
-            } else if self.currentSelectedImage == .back {
+            } else if self.model.currentSelectedImage == .back {
                 self.imageViewBack.image = image
                 self.backImage = image
             }
