@@ -58,6 +58,7 @@ class MergedViewController: UIViewController {
     }
 
     func setUpModel() {
+        model.filterView = filterView
         model.filterImage = frontImage
         model.imageViewBack = imageViewBack
         model.imageViewFront = imageViewFront
