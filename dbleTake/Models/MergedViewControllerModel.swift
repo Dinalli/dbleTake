@@ -43,13 +43,11 @@ class MergedViewControllerModel: NSObject {
         portraitCaptureConstraints = [
             NSLayoutConstraint(item: imageViewFront as Any, attribute: .top, relatedBy: .equal, toItem: view, attribute: .topMargin, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: imageViewFront as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: imageViewFront as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.width/2),
-            NSLayoutConstraint(item: imageViewFront as Any, attribute: .bottom, relatedBy: .equal, toItem: filteredImageScrollView, attribute: .top, multiplier: 1, constant: 5),
+            NSLayoutConstraint(item: imageViewFront as Any, attribute: .bottom, relatedBy: .equal, toItem: filteredImageScrollView, attribute: .top, multiplier: 1, constant: -10),
 
             NSLayoutConstraint(item: imageViewBack as Any, attribute: .top, relatedBy: .equal, toItem: view, attribute: .topMargin, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: imageViewBack as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: imageViewBack as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.width/2),
-            NSLayoutConstraint(item: imageViewBack as Any, attribute: .bottom, relatedBy: .equal, toItem: filteredImageScrollView, attribute: .top, multiplier: 1, constant: 5),
+            NSLayoutConstraint(item: imageViewBack as Any, attribute: .bottom, relatedBy: .equal, toItem: filteredImageScrollView, attribute: .top, multiplier: 1, constant: -10),
 
             NSLayoutConstraint(item: filteredImageScrollView as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: filteredImageScrollView as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0),
@@ -65,12 +63,10 @@ class MergedViewControllerModel: NSObject {
         landscapeCaptureConstraints = [
             NSLayoutConstraint(item: imageViewFront as Any, attribute: .top, relatedBy: .equal, toItem: view, attribute: .topMargin, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: imageViewFront as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: imageViewFront as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.height/2-20),
-            NSLayoutConstraint(item: imageViewFront as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: view.frame.width/2-20),
             NSLayoutConstraint(item: imageViewFront as Any, attribute: .bottom, relatedBy: .equal, toItem: imageViewBack, attribute: .top, multiplier: 1, constant: 1),
 
             NSLayoutConstraint(item: imageViewBack as Any, attribute: .left, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: imageViewBack as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.height/2-20),
+
             NSLayoutConstraint(item: imageViewBack as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
 
             NSLayoutConstraint(item: filteredImageScrollView as Any, attribute: .top, relatedBy: .equal, toItem: view, attribute: .topMargin, multiplier: 1, constant: 0),
@@ -83,6 +79,23 @@ class MergedViewControllerModel: NSObject {
             NSLayoutConstraint(item: filterView as Any, attribute: .right, relatedBy: .equal, toItem: view, attribute: .rightMargin, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: filterView as Any, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
         ]
+
+        if parentViewController.traitCollection.verticalSizeClass == .regular {
+            portraitCaptureConstraints.append(NSLayoutConstraint(item: imageViewFront as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.width/2))
+            portraitCaptureConstraints.append(NSLayoutConstraint(item: imageViewBack as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.width/2))
+            landscapeCaptureConstraints.append(NSLayoutConstraint(item: imageViewBack as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.height/2-20))
+            landscapeCaptureConstraints.append(NSLayoutConstraint(item: imageViewFront as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.height/2-20))
+            landscapeCaptureConstraints.append(NSLayoutConstraint(item: imageViewFront as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: view.frame.width/2-20))
+            NSLayoutConstraint.activate(portraitCaptureConstraints)
+        }
+        else {
+            portraitCaptureConstraints.append(NSLayoutConstraint(item: imageViewFront as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.height/2))
+            portraitCaptureConstraints.append(NSLayoutConstraint(item: imageViewBack as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.height/2))
+            landscapeCaptureConstraints.append(NSLayoutConstraint(item: imageViewBack as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.width/2-20))
+            landscapeCaptureConstraints.append(NSLayoutConstraint(item: imageViewFront as Any, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0, constant: view.frame.width/2-20))
+            landscapeCaptureConstraints.append(NSLayoutConstraint(item: imageViewFront as Any, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0, constant: view.frame.height/2-20))
+            NSLayoutConstraint.activate(landscapeCaptureConstraints)
+        }
     }
 
     func layoutSubviews(vc: UIViewController) {
