@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+enum ImageCaptureOrientation {
+    case portrait
+    case landscape
+}
+
 extension UIImage {
 
     func blendImages(_ img: UIImage,_ imgTwo: UIImage) -> Data? {

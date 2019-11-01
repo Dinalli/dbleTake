@@ -26,6 +26,9 @@ class MergedViewController: UIViewController {
     var originalFrontImage: UIImage!
     var originalBackImage: UIImage!
 
+    var orientation: ImageCaptureOrientation!
+
+    @IBOutlet weak var imageViewHolder: UIView!
     @IBOutlet weak var imageViewFront: UIImageView!
     @IBOutlet weak var imageViewBack: UIImageView!
     @IBOutlet weak var filteredImageScrollView: UIScrollView!
@@ -62,7 +65,29 @@ class MergedViewController: UIViewController {
         model.filterImage = frontImage
         model.imageViewBack = imageViewBack
         model.imageViewFront = imageViewFront
-        model.viewControllerForDelegate = self
+        model.filteredImageScrollView = filteredImageScrollView
+        model.parentViewController = self
+        model.createConstriants()
+        model.layoutSubviews(vc: self)
+    }
+    
+    // MARK: - rotation support
+    override var shouldAutorotate: Bool {
+        return true
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .allButUpsideDown
+    }
+
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+
+    // MARK: - trait collections
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        model.layoutSubviews(vc: self)
     }
 
     // MARK: Filters

@@ -443,14 +443,21 @@ class CaptureViewController: UIViewController  {
             guard let mergeVC = segue.destination as? MergedViewController else { fatalError("Unexpected view controller for segue") }
             mergeVC.frontImage = frontImage
             mergeVC.backImage = backImage
+            switch UIDevice.current.orientation {
+            case .portrait,
+                 .portraitUpsideDown:
+                mergeVC.orientation = .portrait
+            case .landscapeLeft, .landscapeRight:
+                mergeVC.orientation = .landscape
+            default: // .unknown
+               mergeVC.orientation = .portrait
+            }
         }
     }
 
     // MARK: Performing Vision Requests
 
     fileprivate func prepareVisionRequest() {
-
-        //self.trackingRequests = []
         var requests = [VNTrackObjectRequest]()
 
         let faceDetectionRequest = VNDetectFaceRectanglesRequest(completionHandler: { (request, error) in
@@ -488,25 +495,6 @@ extension CaptureViewController: AVCapturePhotoCaptureDelegate {
             print("Error capturing photo: \(error)")
             return
         }
-//
-//        guard let photoData = photo.fileDataRepresentation() else {
-//            print("No photo data resource")
-//            return
-//        }
-
-//        PHPhotoLibrary.requestAuthorization { status in
-//            if status == .authorized {
-//                PHPhotoLibrary.shared().performChanges({
-//                    let options = PHAssetResourceCreationOptions()
-//                    let creationRequest = PHAssetCreationRequest.forAsset()
-//                    creationRequest.addResource(with: .photo, data: photoData, options: options)
-//                }, completionHandler: { _, error in
-//                    if let error = error {
-//                        print("Error occurred while saving photo to photo library: \(error)")
-//                    }
-//                })
-//            }
-//        }
 
         guard let imageData = photo.fileDataRepresentation() else {
             print("Error while generating image from photo capture data.");

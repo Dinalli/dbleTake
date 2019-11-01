@@ -87,26 +87,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Py8-J5-fLr">
-                                <rect key="frame" x="20" y="88" width="182" height="375"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="375" id="5zd-lG-kVd"/>
-                                    <constraint firstAttribute="width" constant="182" id="MuA-3s-aDr"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="e4h-WN-ksy" appends="YES" id="iRp-ip-WdL"/>
-                                </connections>
-                            </imageView>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZZl-Cv-vo6">
-                                <rect key="frame" x="202" y="82" width="192" height="381"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="7M9-pb-kht" appends="YES" id="3tV-u3-HgK"/>
-                                </connections>
-                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="apb-KT-bM3">
+                                <rect key="frame" x="20" y="88" width="374" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Py8-J5-fLr">
+                                        <rect key="frame" x="0.0" y="0.0" width="188" height="375"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="e4h-WN-ksy" appends="YES" id="iRp-ip-WdL"/>
+                                        </connections>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZZl-Cv-vo6">
+                                        <rect key="frame" x="184" y="0.0" width="190" height="375"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="7M9-pb-kht" appends="YES" id="3tV-u3-HgK"/>
+                                        </connections>
+                                    </imageView>
+                                </subviews>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l3N-XO-Uli">
                                 <rect key="frame" x="20" y="471" width="374" height="123"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -119,14 +123,6 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="ZZl-Cv-vo6" firstAttribute="leading" secondItem="Py8-J5-fLr" secondAttribute="trailing" id="HYT-Xq-QK6"/>
-                            <constraint firstItem="Py8-J5-fLr" firstAttribute="top" secondItem="tTe-7A-2nu" secondAttribute="top" id="YYN-DR-ZdK"/>
-                            <constraint firstItem="Py8-J5-fLr" firstAttribute="bottom" secondItem="ZZl-Cv-vo6" secondAttribute="bottom" id="YwY-oU-iwX"/>
-                            <constraint firstItem="Py8-J5-fLr" firstAttribute="leading" secondItem="H55-R8-IxD" secondAttribute="leadingMargin" id="u7y-OJ-zRf"/>
-                            <constraint firstItem="ZZl-Cv-vo6" firstAttribute="top" secondItem="H55-R8-IxD" secondAttribute="topMargin" constant="-6" id="yFC-PU-c5e"/>
-                            <constraint firstItem="ZZl-Cv-vo6" firstAttribute="trailing" secondItem="H55-R8-IxD" secondAttribute="trailingMargin" id="z1n-sD-wf1"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="tTe-7A-2nu"/>
                     </view>
                     <navigationItem key="navigationItem" title=" " id="Lc7-Kt-77j">
@@ -150,6 +146,7 @@
                         <outlet property="filteredImageScrollView" destination="l3N-XO-Uli" id="16B-aK-PM0"/>
                         <outlet property="imageViewBack" destination="ZZl-Cv-vo6" id="sDU-pv-xaR"/>
                         <outlet property="imageViewFront" destination="Py8-J5-fLr" id="4Ol-K6-Vgx"/>
+                        <outlet property="imageViewHolder" destination="apb-KT-bM3" id="bsQ-BI-Ak8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ELA-gN-L21" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
