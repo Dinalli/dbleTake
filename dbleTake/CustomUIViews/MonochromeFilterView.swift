@@ -21,6 +21,7 @@ class MonochromeFilterView: FilterBaseView {
         rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 100)
         rulerView.tintColor = .white
         rulerView.pointerImageView.layer.cornerRadius = 2
+        rulerView.titleLabel.text = "Intensity"
         rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
 
         let colorPickerView = ColorPickerView(frame: CGRect(x: 0, y: 80, width: self.frame.width, height: 150))

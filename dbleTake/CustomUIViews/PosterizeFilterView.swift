@@ -20,6 +20,7 @@ class PosterizeFilterView: FilterBaseView {
         rulerView.setRangeFromAndLength(rangeFrom: 2.0, rangeLength: 12)
         rulerView.setValue(value: 6.0)
         rulerView.tintColor = .white
+        rulerView.titleLabel.text = "Input Level"
         rulerView.pointerImageView.layer.cornerRadius = 2
         rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
     }

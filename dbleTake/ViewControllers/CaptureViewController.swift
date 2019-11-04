@@ -329,7 +329,6 @@ class CaptureViewController: UIViewController  {
             self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
             self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portrait
         case .portraitUpsideDown:
-            print("portrait upside down")
             self.backCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portraitUpsideDown
             self.frontCameraPreview.videoPreviewLayer.connection?.videoOrientation = .portraitUpsideDown
         case .faceDown:

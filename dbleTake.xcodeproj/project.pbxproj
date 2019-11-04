@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,7 @@
 		4025F369234B88F2008E6D38 /* MergedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4025F368234B88F2008E6D38 /* MergedViewController.swift */; };
 		403ADA74234A5DDD004F1295 /* TimerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403ADA73234A5DDD004F1295 /* TimerButtons.swift */; };
 		40435987235DC27B009A83A2 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40435986235DC27B009A83A2 /* ColorPickerView.swift */; };
+		4049493B2370245600922ED2 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 4049493A2370245600922ED2 /* awsconfiguration.json */; };
 		4057CE312354822A009742C3 /* FilterBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057CE302354822A009742C3 /* FilterBaseView.swift */; };
 		4057CE33235484F6009742C3 /* SepiaFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057CE32235484F6009742C3 /* SepiaFilterView.swift */; };
 		406D29EB2351E73C006828EC /* CircularTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406D29EA2351E73C006828EC /* CircularTrackingView.swift */; };
@@ -62,8 +63,10 @@
 		4025F368234B88F2008E6D38 /* MergedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergedViewController.swift; sourceTree = "<group>"; };
 		403ADA73234A5DDD004F1295 /* TimerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerButtons.swift; sourceTree = "<group>"; };
 		40435986235DC27B009A83A2 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
+		4049493A2370245600922ED2 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		4057CE302354822A009742C3 /* FilterBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBaseView.swift; sourceTree = "<group>"; };
 		4057CE32235484F6009742C3 /* SepiaFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SepiaFilterView.swift; sourceTree = "<group>"; };
+		40586337236DE4FC00D4CD44 /* dbleTake.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = dbleTake.entitlements; sourceTree = "<group>"; };
 		406D29EA2351E73C006828EC /* CircularTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTrackingView.swift; sourceTree = "<group>"; };
 		406DD358232B91D800392121 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		406DD35B232B91FB00392121 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
@@ -119,6 +122,7 @@
 		40215C35232B85ED001A90B1 /* dbleTake */ = {
 			isa = PBXGroup;
 			children = (
+				40586337236DE4FC00D4CD44 /* dbleTake.entitlements */,
 				40B9918D235EF7B800652AFA /* HorizontalRuler */,
 				4057CE2F235474C3009742C3 /* CustomUIViews */,
 				4025F365234B87BC008E6D38 /* Extension */,
@@ -131,6 +135,7 @@
 				40215C4D232B85F8001A90B1 /* ViewControllers */,
 				40215C36232B85ED001A90B1 /* AppDelegate.swift */,
 				40215C38232B85ED001A90B1 /* SceneDelegate.swift */,
+				4049493A2370245600922ED2 /* awsconfiguration.json */,
 				40215C42232B85EF001A90B1 /* Assets.xcassets */,
 				40215C47232B85EF001A90B1 /* Info.plist */,
 			);
@@ -266,6 +271,7 @@
 				40215C2F232B85ED001A90B1 /* Sources */,
 				40215C30232B85ED001A90B1 /* Frameworks */,
 				40215C31232B85ED001A90B1 /* Resources */,
+				41C857511C6074E5384A4B5C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -317,6 +323,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4049493B2370245600922ED2 /* awsconfiguration.json in Resources */,
 				40215C46232B85EF001A90B1 /* LaunchScreen.storyboard in Resources */,
 				40215C43232B85EF001A90B1 /* Assets.xcassets in Resources */,
 				40215C3E232B85ED001A90B1 /* Main.storyboard in Resources */,
@@ -326,6 +333,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		41C857511C6074E5384A4B5C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-dbleTake/Pods-dbleTake-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-dbleTake/Pods-dbleTake-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-dbleTake/Pods-dbleTake-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9C7CD12C7A1438497E11E61A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -530,6 +554,7 @@
 			baseConfigurationReference = 97728ADEA91311D519AB35A1 /* Pods-dbleTake.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = dbleTake/dbleTake.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4JYLXVYYFP;
 				INFOPLIST_FILE = dbleTake/Info.plist;
@@ -549,6 +574,7 @@
 			baseConfigurationReference = 56C9592A8E8665FDA32300B0 /* Pods-dbleTake.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = dbleTake/dbleTake.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4JYLXVYYFP;
 				INFOPLIST_FILE = dbleTake/Info.plist;

@@ -8,13 +8,53 @@
 
 import UIKit
 import CoreData
+import AWSMobileClient
+import AWSCore
+import AWSPinpoint
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var pinpoint: AWSPinpoint?
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+        pinpoint = AWSPinpoint(configuration:AWSPinpointConfiguration.defaultPinpointConfiguration(launchOptions: launchOptions))
+
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
+                // Enable or disable features based on authorization.
+        }
+        application.registerForRemoteNotifications()
+
+        // Create AWSMobileClient to connect with AWS
+        return AWSMobileClient.sharedInstance().interceptApplication(
+            application,
+            didFinishLaunchingWithOptions: launchOptions)
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        pinpoint!.notificationManager.interceptDidRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        NSLog("TOKEN DBLETKE " + deviceToken.map { String(format: "%02.2hhx", $0) }.joined())
+    }
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("FAILED TO GET NOTIFICAITON TOKEN")
+    }
+
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        pinpoint!.notificationManager.interceptDidReceiveRemoteNotification(
+                    userInfo, fetchCompletionHandler: completionHandler)
+
+        if (application.applicationState == .active) {
+            let alert = UIAlertController(title: "Notification Received",
+                                          message: userInfo.description,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+
+            let keyWindow = UIApplication.shared.windows.first { $0.isKeyWindow }
+            keyWindow!.rootViewController?.present(alert, animated: true, completion:nil)
+        }
     }
 
     // MARK: UISceneSession Lifecycle

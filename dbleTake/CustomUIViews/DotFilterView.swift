@@ -22,6 +22,7 @@ class DotFilterView: FilterBaseView {
         rulerView.setRangeFromAndLength(rangeFrom: 100, rangeLength: 250)
         rulerView.tintColor = .white
         rulerView.pointerImageView.layer.cornerRadius = 2
+        rulerView.titleLabel.text = "Width"
         rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
 
         let sharpNessRulerView = Ruler(frame: CGRect(x: 0, y: 65, width: self.frame.width, height: 50))
@@ -29,6 +30,7 @@ class DotFilterView: FilterBaseView {
         sharpNessRulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 100)
         sharpNessRulerView.tintColor = .white
         sharpNessRulerView.pointerImageView.layer.cornerRadius = 2
+        sharpNessRulerView.titleLabel.text = "Sharpness"
         sharpNessRulerView.addTarget(self, action: #selector(sharpnessValueChanged(value:)), for: .valueChanged)
 
         let angleRulerView = Ruler(frame: CGRect(x: 0, y: 115, width: self.frame.width, height: 50))
@@ -36,6 +38,7 @@ class DotFilterView: FilterBaseView {
         angleRulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 45)
         angleRulerView.tintColor = .white
         angleRulerView.pointerImageView.layer.cornerRadius = 2
+        angleRulerView.titleLabel.text = "Angle"
         angleRulerView.addTarget(self, action: #selector(angleValueChanged(value:)), for: .valueChanged)
     }
 

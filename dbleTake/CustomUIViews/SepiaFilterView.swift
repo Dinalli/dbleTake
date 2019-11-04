@@ -18,6 +18,7 @@ class SepiaFilterView: FilterBaseView {
         self.addSubview(rulerView)
         rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 100.0)
         rulerView.tintColor = .white
+        rulerView.titleLabel.text = "Intensity"
         rulerView.pointerImageView.layer.cornerRadius = 2
         rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
     }

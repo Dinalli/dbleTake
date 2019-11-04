@@ -34,6 +34,7 @@ import UIKit
     var rulerLayer: RulerLayer!
     var scrollView: UIScrollView!
     var pointerImageView: UIImageView!
+    var titleLabel: UILabel!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,6 +52,7 @@ import UIKit
         rangeFrom = kDefaultRangeFrom
         rangeLength = kDefaultRangeLength
         rulerWidth = kDefaultRulerWidth
+
     }
 
     override func awakeFromNib() {
@@ -65,6 +67,7 @@ import UIKit
         self.setupScrollView()
         self.setupRulerLayer()
         self.setupPointerImage()
+        self.setUpTitleView()
     }
 
     func setupScrollView() {
@@ -103,7 +106,6 @@ import UIKit
         self.rulerLayer.setNeedsDisplay()
     }
 
-
     func setTextColor(color: UIColor, markType: RulerMarkType) {
         if markType.rawValue & RulerMarkType.RulerMarkTypeMajor.rawValue != 0 {
             self.rulerLayer.majorMark.textColor = color;
@@ -121,6 +123,13 @@ import UIKit
         self.pointerImageView = UIImageView()
         self.pointerImageView.backgroundColor = self.tintColor
         self.addSubview(self.pointerImageView)
+    }
+
+    func setUpTitleView() {
+        titleLabel = UILabel(frame: CGRect(x: 2, y: 2, width: 250, height: 30))
+        titleLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        titleLabel.textColor = UIColor.white
+        self.addSubview(titleLabel)
     }
 
     override func layoutSubviews() {

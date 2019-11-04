@@ -17,6 +17,7 @@ class PixelFilterView: FilterBaseView {
         self.addSubview(rulerView)
         rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 20)
         rulerView.tintColor = .white
+        rulerView.titleLabel.text = "Scale"
         rulerView.pointerImageView.layer.cornerRadius = 2
         rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
     }

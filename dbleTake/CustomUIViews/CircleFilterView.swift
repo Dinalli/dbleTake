@@ -20,6 +20,7 @@ class CircleFilterView: FilterBaseView {
         self.addSubview(rulerView)
         rulerView.setRangeFromAndLength(rangeFrom: 100, rangeLength: 250)
         rulerView.tintColor = .white
+        rulerView.titleLabel.text = "Width"
         rulerView.pointerImageView.layer.cornerRadius = 2
         rulerView.addTarget(self, action: #selector(valueChanged(value:)), for: .valueChanged)
 
@@ -27,6 +28,7 @@ class CircleFilterView: FilterBaseView {
         self.addSubview(sharpNessRulerView)
         sharpNessRulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 100)
         sharpNessRulerView.tintColor = .white
+        sharpNessRulerView.titleLabel.text = "Sharpness"
         sharpNessRulerView.pointerImageView.layer.cornerRadius = 2
         sharpNessRulerView.addTarget(self, action: #selector(sharpnessValueChanged(value:)), for: .valueChanged)
     }
