@@ -37,19 +37,8 @@ class MergedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        imageViewBack.image = backImage
-        imageViewFront.image = frontImage
-        originalFrontImage = frontImage
-        originalBackImage = backImage
-        
-        imageViewFront.layer.borderColor = UIColor.red.cgColor
-        imageViewFront.layer.borderWidth = 1.0
-        imageViewBack.layer.borderColor = UIColor.clear.cgColor
-        imageViewBack.layer.borderWidth = 0.0
 
-        imageViewFront.contentMode = .scaleAspectFill
-        imageViewBack.contentMode = .scaleAspectFill
-
+        setUpImages()
         setUpModel()
 
         autoreleasepool {
@@ -58,6 +47,28 @@ class MergedViewController: UIViewController {
             guard let imageData = newImage.jpegData(compressionQuality: 1) else { return }
             showFilteredImages(image: imageHelper.downsample(imageData: imageData, to: thumbSize, scale: 1.0))
         }
+    }
+
+    func setUpImages() {
+        let halfSize = CGSize(width: frontImage.size.width/2, height: frontImage.size.height/2)
+        guard let frontImageData = frontImage.jpegData(compressionQuality: 1) else { return }
+        guard let backImageData = backImage.jpegData(compressionQuality: 1) else { return }
+
+        frontImage = imageHelper.downsample(imageData: frontImageData, to: halfSize, scale: 0.8)
+        backImage = imageHelper.downsample(imageData: backImageData, to: halfSize, scale: 0.8)
+
+        imageViewBack.image = backImage
+        imageViewFront.image = frontImage
+        originalFrontImage = frontImage
+        originalBackImage = backImage
+
+        imageViewFront.layer.borderColor = UIColor.red.cgColor
+        imageViewFront.layer.borderWidth = 1.0
+        imageViewBack.layer.borderColor = UIColor.clear.cgColor
+        imageViewBack.layer.borderWidth = 0.0
+
+        imageViewFront.contentMode = .scaleAspectFill
+        imageViewBack.contentMode = .scaleAspectFill
     }
 
     func setUpModel() {
@@ -150,6 +161,7 @@ class MergedViewController: UIViewController {
         imageViewBack.layer.borderWidth = 0.0
         model.currentSelectedImage = .front
         model.filterImage = self.frontImage
+        filterView.subviews.forEach { $0.removeFromSuperview() }
         model.setFilterImageForFilterView()
     }
     @IBAction func backImageTapped(_ sender: UITapGestureRecognizer) {
@@ -159,6 +171,7 @@ class MergedViewController: UIViewController {
         imageViewBack.layer.borderWidth = 1.0
         model.currentSelectedImage = .back
         model.filterImage = self.backImage
+        filterView.subviews.forEach { $0.removeFromSuperview() }
         model.setFilterImageForFilterView()
     }
 
@@ -175,7 +188,7 @@ class MergedViewController: UIViewController {
                     if let error = error {
                         print("Error occurred while saving photo to photo library: \(error)")
                     }
-                    self.showUserToastMessage(message: "Image Saved to Camera Roll", duration: 2.5)
+                    self.showUserToastMessage(message: "Image Saved to Camera Roll", duration: 4.5)
                 })
             }
         }

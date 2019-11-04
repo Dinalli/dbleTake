@@ -15,7 +15,7 @@ class PixelFilterView: FilterBaseView {
     func configure() {
         let rulerView = Ruler(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 50))
         self.addSubview(rulerView)
-        rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 20)
+        rulerView.setRangeFromAndLength(rangeFrom: 1.0, rangeLength: 50)
         rulerView.tintColor = .white
         rulerView.titleLabel.text = "Scale"
         rulerView.pointerImageView.layer.cornerRadius = 2

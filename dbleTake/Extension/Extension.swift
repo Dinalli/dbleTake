@@ -59,7 +59,7 @@ extension UIViewController {
     func showUserToastMessage(message: String, duration: TimeInterval) {
         DispatchQueue.main.async {
             let toastLabel = UILabel()
-            toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            toastLabel.backgroundColor = UIColor.gray.withAlphaComponent(0.8)
             toastLabel.textColor = UIColor.white
             toastLabel.textAlignment = .center
             toastLabel.font = UIFont(name: "Roboto", size: 18.0)

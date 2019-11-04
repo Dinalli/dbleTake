@@ -37,8 +37,8 @@ class ImageHelper: NSObject {
         autoreleasepool {
             let size = CGSize(width: frontImage.size.width + backImage.size.width , height: frontImage.size.height)
             UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-            frontImage.draw(in: CGRect(x: 0, y: 0, width: frontImage.size.width, height: size.height))
-            backImage.draw(in: CGRect(x: frontImage.size.width, y: 0, width: backImage.size.width, height: size.height))
+            frontImage.draw(in: CGRect(x: 0, y: 0, width: size.width/2, height: size.height))
+            backImage.draw(in: CGRect(x: size.width/2, y: 0, width: size.width/2, height: size.height))
             let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
             UIGraphicsEndImageContext()
             return newImage
