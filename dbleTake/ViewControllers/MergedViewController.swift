@@ -209,11 +209,11 @@ extension MergedViewController: FilterDelegate {
     func updateImage(image: UIImage) {
         DispatchQueue.main.async {
             if self.model.currentSelectedImage == .front {
-                self.imageViewFront.image = image
                 self.frontImage = image
+                self.imageViewFront.image = self.frontImage
             } else if self.model.currentSelectedImage == .back {
-                self.imageViewBack.image = image
                 self.backImage = image
+                self.imageViewBack.image = self.backImage
             }
         }
     }

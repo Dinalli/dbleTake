@@ -9,16 +9,16 @@
 import UIKit
 
 class ImageHelper: NSObject {
-    func imageFromContextImage(image: UIImage) -> UIImage {
-        autoreleasepool {
-            let size = CGSize(width: image.size.width , height: image.size.height)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-            image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: size.height))
-            let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
-            return newImage
-        }
-    }
+//    func imageFromContextImage(image: UIImage) -> UIImage {
+//        autoreleasepool {
+//            let size = CGSize(width: image.size.width, height: image.size.height)
+//            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+//            image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: size.height))
+//            let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+//            UIGraphicsEndImageContext()
+//            return newImage
+//        }
+//    }
 
     // Downsampling large images for display at smaller size
     func downsample(imageData: Data, to pointSize: CGSize, scale: CGFloat) -> UIImage {

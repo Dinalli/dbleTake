@@ -156,7 +156,7 @@ class MergedViewControllerModel: NSObject {
 
     func setUpSepiaFilter() {
         let sepiaView = SepiaFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: 0))
-        sepiaView.originalImage = imageHelper.imageFromContextImage(image: filterImage)
+        sepiaView.originalImage = filterImage
         sepiaView.delegate = parentViewController
         sepiaView.intensity = 1.0
         sepiaView.setUpFilter()
@@ -171,7 +171,7 @@ class MergedViewControllerModel: NSObject {
 
     func setUpMonochromeFilter() {
         let monochromeView = MonochromeFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        monochromeView.originalImage = imageHelper.imageFromContextImage(image: filterImage)
+        monochromeView.originalImage = filterImage
         monochromeView.delegate = parentViewController
         monochromeView.setUpFilter()
         self.filterView.addSubview(monochromeView)
@@ -185,7 +185,7 @@ class MergedViewControllerModel: NSObject {
 
     func setUpPosterizeFilter() {
         let posterizeView = PosterizeFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        posterizeView.originalImage = imageHelper.imageFromContextImage(image: filterImage)
+        posterizeView.originalImage = filterImage
         posterizeView.delegate = parentViewController
         posterizeView.inputLevel = 6.0
         posterizeView.setUpFilter()
@@ -200,7 +200,7 @@ class MergedViewControllerModel: NSObject {
 
     func setUpCircleFilter() {
         let circleView = CircleFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        circleView.originalImage = imageHelper.imageFromContextImage(image: filterImage)
+        circleView.originalImage = filterImage
         circleView.inputCenter = CIVector(x: filterImage.size.width/2, y: filterImage.size.height/2)
         circleView.delegate = parentViewController
         circleView.setUpFilter()
@@ -215,7 +215,7 @@ class MergedViewControllerModel: NSObject {
 
     func setUpDotFilter() {
         let dotView = DotFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        dotView.originalImage = imageHelper.imageFromContextImage(image: filterImage)
+        dotView.originalImage = filterImage
         dotView.inputCenter = CIVector(x: filterImage.size.width/2, y: filterImage.size.height/2)
         dotView.delegate = parentViewController
         dotView.setUpFilter()
@@ -230,7 +230,7 @@ class MergedViewControllerModel: NSObject {
 
     func setUpBlurFilter() {
         let blurView = BlurFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        blurView.originalImage = imageHelper.imageFromContextImage(image: filterImage)
+        blurView.originalImage = filterImage
         blurView.delegate = parentViewController
         blurView.setUpFilter()
         self.filterView.addSubview(blurView)
@@ -244,7 +244,7 @@ class MergedViewControllerModel: NSObject {
 
     func setUpPixelFilter() {
         let pixelView = PixelFilterView(frame: CGRect(x: 0, y: 0, width: self.filterView.frame.size.width, height: self.filterView.frame.size.height))
-        pixelView.originalImage = imageHelper.imageFromContextImage(image: filterImage)
+        pixelView.originalImage = filterImage
         pixelView.delegate = parentViewController
         pixelView.setUpFilter()
         self.filterView.addSubview(pixelView)
@@ -257,7 +257,7 @@ class MergedViewControllerModel: NSObject {
     }
 
     func applyBaisicFilter(filter: String) {
-        let filterImage = imageHelper.imageFromContextImage(image: self.filterImage)
+        //let filterImage = imageHelper.imageFromContextImage(image: self.filterImage)
         guard let originalCIImage = CIImage(image: filterImage) else { return }
         let filteredImage = filterHelper.applyFilter(image: originalCIImage, filterName: filter)
         if self.currentSelectedImage == .front {
@@ -271,7 +271,7 @@ class MergedViewControllerModel: NSObject {
         for filterView in self.filterView.subviews {
             if filterView.isKind(of: FilterBaseView.self) {
                 guard let filterView = filterView as? FilterBaseView else { return }
-                filterView.originalImage = imageHelper.imageFromContextImage(image: filterImage)
+                filterView.originalImage = filterImage
                 filterView.setUpFilter()
             }
         }

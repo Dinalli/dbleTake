@@ -24,7 +24,7 @@ class PixelFilterView: FilterBaseView {
 
     @objc func valueChanged(value: CGFloat) {
         inputScale = value
-        let filteredImage = filterHelper.applyPixelFilter(image: self.originalCIImage,
+        let filteredImage = filterHelper.applyPixelFilter(image: originalCIImage,
                                                           inputScale: inputScale)
         if delegate != nil {
             delegate?.updateImage(image: filteredImage)
