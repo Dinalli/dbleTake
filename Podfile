@@ -7,7 +7,7 @@ target 'dbleTake' do
 
   # Pods for dbleTake
   pod 'SwiftLint'
-  pod 'AWSMobileClient', '~> 2.6.13'
-  pod 'AWSPinpoint', '~> 2.6.13'
+  pod 'AWSMobileClient'
+  pod 'AWSPinpoint'
 
 end

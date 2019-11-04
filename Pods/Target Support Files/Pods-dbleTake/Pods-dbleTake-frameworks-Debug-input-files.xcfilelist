@@ -1,0 +1,5 @@
+${PODS_ROOT}/Target Support Files/Pods-dbleTake/Pods-dbleTake-frameworks.sh
+${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework
+${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework
+${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework
+${BUILT_PRODUCTS_DIR}/AWSPinpoint/AWSPinpoint.framework
